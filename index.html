@@ -473,7 +473,7 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
 ⚡ Pengiriman Super Cepat Estimasi 1 Jam<br>
 📍 Area Kabupaten Majalengka
 </p>
-<audio id="laguPromo">
+<audio id="laguPromo" preload="auto">
 <source src="promo.mp3" type="audio/mpeg">
 </audio>
 <button onclick="playLagu()" class="btn-belanja">
@@ -585,7 +585,9 @@ document.getElementById("promoPopup").style.display="none";
 </script>
 <script>
 function playLagu(){
-document.getElementById("laguPromo").play();
+var lagu = document.getElementById("laguPromo");
+lagu.currentTime = 0;
+lagu.play();
 }
 </script>
 </body>

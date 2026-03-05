@@ -127,26 +127,25 @@ margin:auto;
 }
 
 .produk-card{
-background:linear-gradient(135deg,#16a34a,#f97316);
-padding:10px;
+background:white;
 border-radius:12px;
 overflow:hidden;
 box-shadow:0 6px 18px rgba(0,0,0,0.12);
+display:flex;
+flex-direction:column;
 }
 .produk-img-box{
+height:180px;
 background:linear-gradient(135deg,#16a34a,#f97316);
-height:200px;
 display:flex;
 align-items:center;
 justify-content:center;
-border-radius:8px 8px 0 0;
 }
+
 .produk-img{
-width:85%;
-height:160px;
+max-height:140px;
+max-width:80%;
 object-fit:contain;
-margin:auto;
-display:block;
 }
 .produk-info{
 padding:10px;
@@ -423,6 +422,7 @@ html+=`
 <div class="produk-img-box">
 <img src="${foto}" class="produk-img">
 </div>
+
 <div class="produk-info">
 
 <div class="produk-nama">${nama}</div>
@@ -441,7 +441,6 @@ onclick="tambahKeranjang('${nama}','${harga}','${foto}')">
 </div>
 
 `;
-
 });
 
 document.getElementById("produkList").innerHTML=html;

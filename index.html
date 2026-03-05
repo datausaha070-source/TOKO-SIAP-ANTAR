@@ -610,6 +610,29 @@ margin:auto;
 .slide.active{
 display:block;
   }
+.zoomBox{
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.zoomClose{
+position:absolute;
+top:-10px;
+right:-10px;
+background:#ff4d4d;
+color:white;
+font-size:18px;
+width:30px;
+height:30px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+box-shadow:0 3px 8px rgba(0,0,0,0.3);
+}
 </style>
 
 
@@ -652,10 +675,12 @@ showSlide();
 
   </script>
 
-<div id="zoomPopup" onclick="tutupZoom(event)">
-<img id="zoomImg" onclick="event.stopPropagation()">
+<div id="zoomPopup">
+<div class="zoomBox">
+<span class="zoomClose" onclick="tutupZoom()">✕</span>
+<img id="zoomImg">
 </div>
-
+</div>
 <script>
 
 function zoomFoto(src){
@@ -666,8 +691,7 @@ img.src=src;
 popup.style.display="flex";
 }
 
-function tutupZoom(e){
-if(e.target.id==="zoomPopup"){
+function tutupZoom(){
 document.getElementById("zoomPopup").style.display="none";
 }
 }

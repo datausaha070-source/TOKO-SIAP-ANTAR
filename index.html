@@ -652,8 +652,8 @@ showSlide();
 
   </script>
 
-<div id="zoomPopup" onclick="tutupZoom()">
-<img id="zoomImg">
+<div id="zoomPopup" onclick="tutupZoom(event)">
+<img id="zoomImg" onclick="event.stopPropagation()">
 </div>
 
 <script>
@@ -666,10 +666,11 @@ img.src=src;
 popup.style.display="flex";
 }
 
-function tutupZoom(){
+function tutupZoom(e){
+if(e.target.id==="zoomPopup"){
 document.getElementById("zoomPopup").style.display="none";
 }
-
+}
 </script>
 
 </body>

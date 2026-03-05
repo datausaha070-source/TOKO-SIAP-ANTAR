@@ -230,7 +230,27 @@ max-width:90%;
 max-height:90%;
 border-radius:12px;
 }
+.promo-wrap{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin:15px;
+}
 
+.promo-slide{
+width:80px;
+}
+
+.promo-slide img{
+width:100%;
+border-radius:10px;
+box-shadow:0 3px 8px rgba(0,0,0,0.3);
+}
+
+.promo-tengah{
+flex:1;
+}
 </style>
 </head>
 
@@ -259,6 +279,21 @@ border-radius:12px;
   <marquee behavior="scroll" direction="left" scrollamount="10">
   🚀 Selamat Datang di TOKO SIAP ANTAR • Ready Stock LCD, Baterai, IC, Speaker & Sparepart Handphone • Harga Grosir & Bergaransi • Bisa COD / Transfer • Pengiriman Super Cepat Estimasi 1 Jam Area Kabupaten Majalengka • Order Sekarang Kami Siap Antar ke Lokasi Anda! 🔥
   </marquee>
+</div>
+<div class="promo-wrap">
+
+<div class="promo-slide kiri">
+<img id="slideKiri" src="promo1.jpg">
+</div>
+
+<div class="promo-tengah">
+<!-- banner tengah yang sekarang tetap -->
+</div>
+
+<div class="promo-slide kanan">
+<img id="slideKanan" src="promo2.jpg">
+</div>
+
 </div>
 <!-- HERO -->
 <div class="hero">

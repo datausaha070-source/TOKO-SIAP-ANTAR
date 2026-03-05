@@ -138,7 +138,7 @@ height:100%;
 
 .produk-img{
 width:100%;
-height:150px;
+height:500px;
 object-fit:cover;
 }
 
@@ -366,17 +366,21 @@ function convertDrive(link){
 
 if(!link) return "";
 
-let id = "";
+let id="";
 
 if(link.includes("id=")){
-id = link.split("id=")[1];
+id = link.split("id=")[1].split("&")[0];
 }
 
-if(link.includes("/d/")){
+else if(link.includes("/d/")){
 id = link.split("/d/")[1].split("/")[0];
 }
 
-return "https://drive.google.com/uc?export=view&id="+id;
+else{
+return link;
+}
+
+return "https://drive.google.com/thumbnail?id="+id+"&sz=w1000";
 
 }
 </script>
@@ -384,40 +388,33 @@ return "https://drive.google.com/uc?export=view&id="+id;
 <!-- SCRIPT PRODUK GOOGLE SHEET -->
 <script>
 
-const sheetURL =
-"https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=MEMBER";
+const sheetURL="https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=MEMBER";
 
 fetch(sheetURL)
-.then(res => res.text())
-.then(data => {
 
-const json = JSON.parse(data.substring(47).slice(0,-2));
+.then(res=>res.text())
 
-let rows = json.table.rows;
+.then(data=>{
 
-let html = "";
+const json=JSON.parse(data.substring(47).slice(0,-2));
+
+let rows=json.table.rows;
+
+let html="";
 
 rows.forEach(r=>{
 
-let nama = r.c[1]?.v;
-let harga = r.c[7]?.v;
-let foto = convertDrive(r.c[9]?.v);
+let nama=r.c[1]?.v;
+let harga=r.c[7]?.v;
+let foto=convertDrive(r.c[9]?.v);
+
 if(!nama) return;
 
-html += `
+html+=`
+
 <div class="produk-card">
 
-<div class="produk-img">
-
-<img src="${foto}" 
-style="
-width:100%;
-height:120px;
-object-fit:cover;
-border-radius:8px 8px 0 0;
-">
-
-</div>
+<img src="${foto}" class="produk-img">
 
 <div class="produk-info">
 
@@ -433,12 +430,14 @@ onclick="tambahKeranjang('${nama}','${harga}','${foto}')">
 </button>
 
 </div>
+
 </div>
+
 `;
 
 });
 
-document.getElementById("produkList").innerHTML = html;
+document.getElementById("produkList").innerHTML=html;
 
 });
 

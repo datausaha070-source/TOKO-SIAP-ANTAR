@@ -773,5 +773,42 @@ document.getElementById("slideKanan").src=gambar[(i+1)%gambar.length];
 },3000);
 
 </script>
+<script>
+
+let slideTengah=[
+"slide1.png",
+"slide2.png",
+"slide3.png",
+"slide4.png",
+"slide5.png"
+];
+
+let slidePromo=[
+"promo1.jpg",
+"promo2.jpg",
+"promo3.jpg",
+"promo4.jpg",
+"promo5.jpg"
+];
+
+let i=0;
+
+setInterval(function(){
+
+i++;
+if(i>=slideTengah.length){i=0;}
+
+// slide tengah PNG
+document.querySelector(".slider img").src=slideTengah[i];
+
+// slide kiri JPG
+document.getElementById("slideKiri").src=slidePromo[i];
+
+// slide kanan JPG
+document.getElementById("slideKanan").src=slidePromo[(i+1)%slidePromo.length];
+
+},3000);
+
+</script>
 </body>
 </html>

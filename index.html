@@ -232,7 +232,7 @@ border-radius:12px;
 }
 .promo-wrap{
 position:relative;
-}
+display:flex;
 align-items:center;
 justify-content:center;
 gap:10px;
@@ -269,9 +269,6 @@ display:flex;
 justify-content:center;
 }
 
-.slider img{
-width:200px;
-}
 
 /* PROMO KIRI */
 .promo-slide.kiri{
@@ -775,6 +772,7 @@ popup.style.display="flex";
 function tutupZoom(){
 document.getElementById("zoomPopup").style.display="none";
 }
+</script>
 
 <script>
 
@@ -802,7 +800,7 @@ i++;
 if(i>=slideTengah.length){i=0;}
 
 // slide tengah PNG
-document.querySelector(".slider img").src=slideTengah[i];
+document.querySelector(".slide").src=slideTengah[i];
 
 // slide kiri JPG
 document.getElementById("slideKiri").src=slidePromo[i];

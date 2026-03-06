@@ -307,13 +307,13 @@ border-radius:12px;
 position:absolute;
 left:50%;
 transform:translateX(-50%);
-bottom:-55px; /* membuat logo menimpa banner */
+bottom:-60px;
 
-width:170px;
-height:170px;
+width:180px;
+height:180px;
 border-radius:50%;
 
-background:linear-gradient(135deg,#16a34a,#f97316);
+background:white;
 
 display:flex;
 align-items:center;
@@ -321,15 +321,23 @@ justify-content:center;
 
 z-index:5;
 
+/* lingkaran gradasi */
+border:8px solid transparent;
+background-image:
+linear-gradient(white,white),
+linear-gradient(135deg,#16a34a,#f97316);
+
+background-origin:border-box;
+background-clip:content-box,border-box;
+
 box-shadow:
 0 12px 30px rgba(0,0,0,0.35),
-0 0 20px rgba(22,163,74,0.6);
+0 0 20px rgba(22,163,74,0.4);
 }
 
 .logo-tengah img{
 width:120px;
 }
-
 </style>
 </head>
 

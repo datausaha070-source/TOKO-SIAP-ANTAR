@@ -49,19 +49,31 @@ height:4px;
 background:linear-gradient(90deg,var(--primary),var(--accent));
 }
 
-/* ===== SLIDER ===== */
+/* ===== SLIDER BERJALAN ===== */
 .slider{
 width:100%;
-display:flex;
-justify-content:center;
-align-items:center;
+overflow:hidden;
+background:white;
 }
 
-.slider img{
-width:90%;
-max-width:320px;
-display:block;
-margin:auto;
+.slider-track{
+display:flex;
+width:max-content;
+animation:slidejalan 25s linear infinite;
+}
+
+.slider-track img{
+width:260px;
+margin:0 15px;
+}
+
+@keyframes slidejalan{
+0%{
+transform:translateX(0);
+}
+100%{
+transform:translateX(-50%);
+}
 }
 
 /* ===== PROMO KIRI KANAN ===== */

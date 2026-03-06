@@ -50,21 +50,26 @@ background:linear-gradient(90deg,var(--primary),var(--accent));
 }
 
 /* ===== SLIDER BERJALAN ===== */
+.logo-tengah{
+position:absolute;
+bottom:-20px;
+width:120px;
+}
+
 .slider{
 width:100%;
 overflow:hidden;
-background:white;
 }
 
 .slider-track{
 display:flex;
-width:max-content;
 animation:slidejalan 25s linear infinite;
 }
 
 .slider-track img{
-width:260px;
-margin:0 15px;
+width:220px;
+margin:0 10px;
+border-radius:10px;
 }
 
 @keyframes slidejalan{

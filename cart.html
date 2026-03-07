@@ -314,6 +314,13 @@ fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${
 namaDesa = data.address.village || data.address.suburb || "-";
 namaKecamatan = data.address.subdistrict || data.address.county || "-";
 
+let kabupaten = data.address.county || data.address.city || "";
+
+if(!kabupaten.toLowerCase().includes("majalengka")){
+popup("Maaf pengiriman belum bisa ke luar wilayah Kabupaten Majalengka");
+return;
+}
+
 hitungOngkir();
 animasiMotor(); // TAMBAHAN MOTOR
 
@@ -363,15 +370,6 @@ function hitungOngkir(){
 
 jarakFix = map.distance([tokoLat,tokoLng],[tujuanLat,tujuanLng]) / 1000;
 
-const radiusMax = 30;
-
-if(jarakFix > radiusMax){
-
-popup("Maaf lokasi diluar jangkauan pengiriman ("+radiusMax+" km)");
-ongkir = 0;
-return;
-
-}
 
 const hargaBensin = 10000;
 const kmPerLiter = 40;

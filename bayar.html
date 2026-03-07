@@ -39,6 +39,17 @@ document.getElementById("opsiTransfer").style.display="block";
 let checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {};
 let noWa = checkoutData.noWa || "";
 
+// normalisasi nomor WA
+noWa = noWa.replace(/\D/g,'');
+
+if(noWa.startsWith("0")){
+noWa = "62" + noWa.substring(1);
+}
+
+if(noWa.startsWith("8")){
+noWa = "62" + noWa;
+}
+
 let dbPelanggan = JSON.parse(localStorage.getItem("dbPelanggan")) || {};
 
 let jumlahBelanja = dbPelanggan[noWa] || 0;
@@ -53,10 +64,10 @@ tombolCOD.innerText = "💵 COD (Bayar di Tempat) ✔";
 function pilihCOD(){
 
 let checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {};
-let noWa = checkoutData.noWa || "-";
+let noWa = checkoutData.noWa || "";
 
 // normalisasi nomor WA
-noWa = noWa.replace(/\D/g,''); // hapus karakter selain angka
+noWa = noWa.replace(/\D/g,'');
 
 if(noWa.startsWith("0")){
 noWa = "62" + noWa.substring(1);

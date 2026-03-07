@@ -43,11 +43,11 @@ let dbPelanggan = JSON.parse(localStorage.getItem("dbPelanggan")) || {};
 
 let jumlahBelanja = dbPelanggan[noWa] || 0;
 
-if(jumlahBelanja >= 10){
-document.getElementById("btnCOD").innerText =
-"💵 COD (Bayar di Tempat) ✔";
-}
+let tombolCOD = document.getElementById("btnCOD");
 
+if(tombolCOD && jumlahBelanja >= 10){
+tombolCOD.innerText = "💵 COD (Bayar di Tempat) ✔";
+}
 // ================= PILIH COD =================
 
 function pilihCOD(){

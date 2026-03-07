@@ -132,7 +132,22 @@ document.body.appendChild(box);
 function pilihTransfer(bank,norek,nama){
 kirimWA("TRANSFER",bank,norek,nama);
 }
+function levelPelanggan(transaksi){
 
+if(transaksi < 3){
+return "Member Baru";
+}
+else if(transaksi < 7){
+return "Member Silver";
+}
+else if(transaksi < 15){
+return "Member Gold";
+}
+else{
+return "Member Prioritas";
+}
+
+}
 // ================= KIRIM PESAN WA =================
 
 async function kirimWA(metode,bank,norek,nama){
@@ -232,8 +247,8 @@ let pesan =
 "📌 ID Sistem : #"+orderId+"\n"+
 "📅 Tanggal   : "+tanggal+"\n"+
 "🕒 Jam       : "+jam+"\n"+
-"🔢 Transaksi ke : "+transaksiKe+"\n\n"+
-
+"🔢 Transaksi ke : "+transaksiKe+"\n"+
+"⭐ Status Pelanggan : "+level+"\n\n"+
 "👤 Nomor Pembeli:\n"+noWa+"\n\n"+
 
 "━━━━━━━━━━━━━━━━━━━━\n"+

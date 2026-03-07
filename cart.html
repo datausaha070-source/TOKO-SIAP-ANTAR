@@ -212,6 +212,11 @@ navigator.geolocation.getCurrentPosition(
 
 function(pos){
 
+// hapus popup loading
+document.querySelectorAll("body > div").forEach(el=>{
+if(el.style.zIndex=="9999") el.remove();
+});
+
 setLokasi(
 pos.coords.latitude,
 pos.coords.longitude
@@ -220,6 +225,10 @@ pos.coords.longitude
 },
 
 function(error){
+
+document.querySelectorAll("body > div").forEach(el=>{
+if(el.style.zIndex=="9999") el.remove();
+});
 
 popup("❌ Tidak bisa mendapatkan lokasi. Aktifkan GPS.");
 

@@ -201,11 +201,34 @@ setLokasi(e.latlng.lat,e.latlng.lng);
 
 function gunakanLokasi(){
 
-navigator.geolocation.getCurrentPosition(function(pos){
+if(!navigator.geolocation){
+alert("Browser tidak mendukung GPS");
+return;
+}
 
-setLokasi(pos.coords.latitude,pos.coords.longitude);
+navigator.geolocation.getCurrentPosition(
 
-});
+function(pos){
+
+let lat = pos.coords.latitude;
+let lng = pos.coords.longitude;
+
+setLokasi(lat,lng);
+
+},
+
+function(error){
+
+alert("Tidak bisa mengambil lokasi.\nAktifkan GPS dan izin lokasi.");
+
+},
+
+{
+enableHighAccuracy:true,
+timeout:10000
+}
+
+);
 
 }
 

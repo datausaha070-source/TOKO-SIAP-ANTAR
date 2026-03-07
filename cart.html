@@ -89,19 +89,11 @@ return Math.round(a).toLocaleString("id-ID");
 function kontrolCheckout(total){
 
 let tombol = document.getElementById("btnCheckout");
-let noWa = document.getElementById("waPembeli").value.trim();
 
-if(
-cart.length === 0 ||
-!tujuanLat ||
-!noWa ||
-(minimalBelanja > 0 && total < minimalBelanja)
-){
+if(minimalBelanja > 0 && total < minimalBelanja){
 tombol.style.background = "#9ca3af";
-tombol.style.pointerEvents = "none";
 }else{
 tombol.style.background = "#16a34a";
-tombol.style.pointerEvents = "auto";
 }
 
 }

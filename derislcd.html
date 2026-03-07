@@ -119,7 +119,7 @@ return Number(x).toLocaleString("id-ID");
 }
 
 
-// ================= AMBIL DATA =================
+// ================= AMBIL DATA GOOGLE SHEET =================
 
 fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`)
 .then(res=>res.text())
@@ -127,13 +127,16 @@ fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sh
 
 let json = JSON.parse(data.substring(47).slice(0,-2));
 
-let rows = json.table.rows || [];
+let rows = json.table && json.table.rows ? json.table.rows : [];
 
 semuaProduk = rows.map((r,i)=>({
 
 id:"P"+i,
+
 kode:r.c && r.c[0] ? r.c[0].v : "",
+
 nama:r.c && r.c[1] ? r.c[1].v : "",
+
 harga:r.c && r.c[3] ? Number(r.c[3].v) : 0
 
 })).filter(p => p.nama !== "");
@@ -141,7 +144,9 @@ harga:r.c && r.c[3] ? Number(r.c[3].v) : 0
 render();
 
 });
-// ================= RENDER =================
+
+
+// ================= RENDER PRODUK =================
 
 function render(){
 
@@ -152,7 +157,7 @@ let keyword=document.getElementById("search").value.toLowerCase();
 list.innerHTML="";
 
 semuaProduk
-.filter(p=>p.nama.toLowerCase().includes(keyword))
+.filter(p => (p.nama || "").toLowerCase().includes(keyword))
 .forEach(p=>{
 
 let item=cart.find(c=>c.id===p.id);
@@ -172,6 +177,7 @@ if(qty==0){
 
 let btn=document.createElement("button");
 btn.innerText="+ Tambah";
+
 btn.onclick=()=>tambah(p);
 
 card.appendChild(btn);
@@ -205,13 +211,9 @@ function tambah(p){
 let item=cart.find(x=>x.id===p.id);
 
 if(item){
-
 item.qty++;
-
 }else{
-
 cart.push({...p,qty:1});
-
 }
 
 simpan();
@@ -237,9 +239,7 @@ if(item){
 item.qty--;
 
 if(item.qty<=0){
-
 cart=cart.filter(p=>p.id!==id);
-
 }
 
 }

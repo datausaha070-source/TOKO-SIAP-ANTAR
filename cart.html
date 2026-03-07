@@ -154,18 +154,35 @@ renderCart();
 
 function lanjutBayar(){
 
+if(cart.length===0){
+popup("Keranjang masih kosong");
+return;
+}
+
 if(!tujuanLat){
 popup("Pilih lokasi pengiriman dulu");
 return;
 }
 
-let noWa = document.getElementById("waPembeli").value.trim();
+let total = 0;
+cart.forEach(p=>{
+total += p.harga * p.qty;
+});
+
+if(minimalBelanja > 0 && total < minimalBelanja){
+popup("Minimal belanja Rp "+rupiah(minimalBelanja));
+return;
+}
+
+if(noWa.length < 10){
+popup("Nomor WhatsApp tidak valid");
+return;
+}
 
 if(!noWa){
 popup("Isi nomor WhatsApp dulu");
 return;
 }
-
 localStorage.setItem("checkoutData", JSON.stringify({
 lat: tujuanLat,
 lng: tujuanLng,

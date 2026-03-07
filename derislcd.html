@@ -126,10 +126,9 @@ let json = JSON.parse(data.substr(47).slice(0,-2));
 
 semuaProduk = json.table.rows.map((r,i)=>({
 id:i,
-nama:r.c[0]?.v,
-kode:r.c[1]?.v,
-harga:r.c[2]?.v,
-gambar:r.c[3]?.v
+kode:r.c[0]?.v,
+nama:r.c[1]?.v,
+harga:r.c[3]?.v
 }));
 
 render();

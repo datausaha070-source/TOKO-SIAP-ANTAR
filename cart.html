@@ -224,31 +224,35 @@ renderCart();
 
 // ================= CHECKOUT CONTROL =================
 
-function kontrolCheckout(total){
-
-let btn=document.getElementById("btnCheckout");
-
-let noWa=document.getElementById("waPembeli").value.trim();
-
-if(!tujuanLat || !noWa || total<minimalBelanja){
-
-btn.style.background="#9ca3af";
-btn.style.pointerEvents="none";
-
-}else{
-
-btn.style.background="#16a34a";
-btn.style.pointerEvents="auto";
-
-}
-
-}
-
-// ================= LANJUT BAYAR =================
-
 function lanjutBayar(){
 
+if(cart.length===0){
+alert("Keranjang masih kosong");
+return;
+}
+
+if(!tujuanLat){
+alert("Pilih lokasi pengiriman dulu");
+return;
+}
+
+let total=0;
+
+cart.forEach(p=>{
+total+=p.harga*p.qty;
+});
+
+if(minimalBelanja>0 && total<minimalBelanja){
+alert("Minimal belanja Rp "+rupiah(minimalBelanja));
+return;
+}
+
 let noWa=document.getElementById("waPembeli").value.trim();
+
+if(!noWa){
+alert("Isi nomor WhatsApp dulu");
+return;
+}
 
 noWa=noWa.replace(/\D/g,'');
 
@@ -270,7 +274,6 @@ noWa:noWa
 window.location.href="bayar.html";
 
 }
-
 // ================= MAP =================
 
 var map=L.map('map').setView([tokoLat,tokoLng],15);
@@ -318,14 +321,35 @@ setLokasi(e.latlng.lat,e.latlng.lng);
 
 function gunakanLokasi(){
 
-navigator.geolocation.getCurrentPosition(function(pos){
-
-setLokasi(pos.coords.latitude,pos.coords.longitude);
-
-});
-
+if(!navigator.geolocation){
+alert("Browser tidak mendukung GPS");
+return;
 }
 
+navigator.geolocation.getCurrentPosition(
+
+function(pos){
+
+let lat=pos.coords.latitude;
+let lng=pos.coords.longitude;
+
+setLokasi(lat,lng);
+
+},
+
+function(){
+alert("Tidak bisa mengambil lokasi.\nAktifkan GPS.");
+},
+
+{
+enableHighAccuracy:true,
+timeout:15000,
+maximumAge:0
+}
+
+);
+
+}
 // ================= SET LOKASI =================
 
 function setLokasi(lat,lng){

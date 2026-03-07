@@ -625,9 +625,9 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
 </script>
 <!-- POPUP PROMOSI TOKO SIAP ANTAR -->
 
-<div id="promoPopup">
+<div id="promoPopup" onclick="tutupPromo()">
 
-<div class="promo-box">
+<div class="promo-box" onclick="event.stopPropagation()">
 
 <img src="logo2.png" class="logo">
 

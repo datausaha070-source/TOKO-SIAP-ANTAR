@@ -62,7 +62,7 @@ z-index:999;
 
 <div class="checkout" id="btnCheckout" onclick="lanjutBayar()">🛒 Checkout</div>
 
-<div class="clearBtn" onclick="kosongkan()">🗑 Kosongkan</div>>
+<div class="clearBtn" onclick="kosongkan()">🗑 Kosongkan</div>
 
 <script>
 
@@ -89,17 +89,22 @@ return Math.round(a).toLocaleString("id-ID");
 function kontrolCheckout(total){
 
 let tombol = document.getElementById("btnCheckout");
+let noWa = document.getElementById("waPembeli").value.trim();
 
-if(minimalBelanja > 0 && total < minimalBelanja){
+if(
+cart.length === 0 ||
+!tujuanLat ||
+!noWa ||
+(minimalBelanja > 0 && total < minimalBelanja)
+){
 tombol.style.background = "#9ca3af";
 tombol.style.pointerEvents = "none";
 }else{
-tombol.style.background = "#15803d";
+tombol.style.background = "#16a34a";
 tombol.style.pointerEvents = "auto";
 }
 
 }
-
 // ================= RENDER CART =================
 function renderCart(){
 

@@ -175,15 +175,14 @@ return;
 }
 
 let noWa = document.getElementById("waPembeli").value.trim();
+noWa = noWa.replace(/\D/g,'');
 
-if(!noWa){
-popup("Isi nomor WhatsApp dulu");
-return;
+if(noWa.startsWith("0")){
+noWa = "62" + noWa.substring(1);
 }
 
-if(noWa.length < 10){
-popup("Nomor WhatsApp tidak valid");
-return;
+if(noWa.startsWith("8")){
+noWa = "62" + noWa;
 }
 localStorage.setItem("checkoutData", JSON.stringify({
 lat: tujuanLat,

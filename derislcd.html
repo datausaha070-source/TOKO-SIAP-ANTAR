@@ -94,7 +94,7 @@ text-decoration:none;
 
 <body>
 
-<header>Produck LCD & BATTERY</header>
+<header>Produk LCD</header>
 
 <div class="searchBox">
 <input type="text" id="search" placeholder="🔍 Cari produk...">
@@ -106,40 +106,43 @@ text-decoration:none;
 
 <script>
 
-const sheetId = "19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=LCD";
-let semuaProduk = [];
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let semuaProduk=[];
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
 function rupiah(x){
-return Math.round(x).toLocaleString("id-ID");
+return Number(x).toLocaleString("id-ID");
 }
 
 
-// ================= AMBIL DATA SHEET =================
-const sheetURL = "https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=LCD";
+// ================= AMBIL DATA GOOGLE SHEET =================
+
+const sheetURL="https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=LCD";
 
 fetch(sheetURL)
-.then(res => res.text())
-.then(data => {
+.then(res=>res.text())
+.then(data=>{
 
-let json = JSON.parse(data.substr(47).slice(0,-2));
+let json=JSON.parse(data.substr(47).slice(0,-2));
 
-semuaProduk = json.table.rows.map((r,i)=>({
+semuaProduk=json.table.rows
+.filter(r=>r.c[1])
+.map((r,i)=>({
 id:i,
-kode:r.c[0]?.v,
-nama:r.c[1]?.v,
-harga:r.c[3]?.v
+kode:r.c[0]?.v||"",
+nama:r.c[1]?.v||"",
+harga:r.c[3]?.v||0
 }));
 
 render();
 
 });
-// ================= RENDER =================
+
+
+// ================= RENDER PRODUK =================
 
 function render(){
 
 let list=document.getElementById("produkList");
-
 let keyword=document.getElementById("search").value.toLowerCase();
 
 list.innerHTML="";
@@ -149,7 +152,6 @@ semuaProduk
 .forEach(p=>{
 
 let item=cart.find(c=>c.id===p.id);
-
 let qty=item?item.qty:0;
 
 let card=document.createElement("div");
@@ -165,7 +167,6 @@ if(qty==0){
 
 let btn=document.createElement("button");
 btn.innerText="+ Tambah";
-
 btn.onclick=()=>tambah(p);
 
 card.appendChild(btn);
@@ -176,9 +177,9 @@ let box=document.createElement("div");
 box.className="qtyBox";
 
 box.innerHTML=`
-<button onclick="kurang('${p.id}')">-</button>
+<button onclick="kurang(${p.id})">-</button>
  ${qty}
-<button onclick="tambahQty('${p.id}')">+</button>
+<button onclick="tambahQty(${p.id})">+</button>
 `;
 
 card.appendChild(box);
@@ -199,13 +200,9 @@ function tambah(p){
 let item=cart.find(x=>x.id===p.id);
 
 if(item){
-
 item.qty++;
-
 }else{
-
 cart.push({...p,qty:1});
-
 }
 
 simpan();
@@ -215,7 +212,6 @@ simpan();
 function tambahQty(id){
 
 let item=cart.find(p=>p.id===id);
-
 if(item)item.qty++;
 
 simpan();
@@ -231,9 +227,7 @@ if(item){
 item.qty--;
 
 if(item.qty<=0){
-
 cart=cart.filter(p=>p.id!==id);
-
 }
 
 }
@@ -245,7 +239,6 @@ simpan();
 function simpan(){
 
 localStorage.setItem("cart",JSON.stringify(cart));
-
 render();
 
 }

@@ -324,52 +324,48 @@ function gunakanLokasi(){
     setLokasi(pos.coords.latitude,pos.coords.longitude);
   });
 }
-// ================= SET LOKASI =================
 
 function setLokasi(lat,lng){
+  tujuanLat = lat;
+  tujuanLng = lng;
+if(window.garis) map.removeLayer(window.garis);
 
-tujuanLat=lat;
-tujuanLng=lng;
-
-if(markerUser)map.removeLayer(markerUser);
-
-markerUser=L.marker([lat,lng])
-.addTo(map)
-.bindPopup("Lokasi Pengiriman")
-.openPopup();
-
-map.setView([lat,lng],17);
-
-// garis rute
-
-if(window.garis)map.removeLayer(window.garis);
-
-window.garis=L.polyline([
+window.garis = L.polyline(
+[
 [tokoLat,tokoLng],
 [lat,lng]
-],{
+],
+{
 color:"#15803d",
 weight:4
-}).addTo(map);
+}
+).addTo(map);
+if(window.radius) map.removeLayer(window.radius);
 
-// radius
-
-if(window.radius)map.removeLayer(window.radius);
-
-window.radius=L.circle([tokoLat,tokoLng],{
+window.radius = L.circle(
+[tokoLat,tokoLng],
+{
 radius:30000,
 color:"#f97316",
+fillColor:"#f97316",
 fillOpacity:0.08
-}).addTo(map);
+}
+).addTo(map);
+  if(markerUser) map.removeLayer(markerUser);
 
-// ambil alamat
+  markerUser = L.marker([lat,lng])
+  .addTo(map)
+  .bindPopup("Lokasi Pengiriman")
+  .openPopup();
 
-fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-.then(res=>res.json())
-.then(data=>{
+  map.setView([lat,lng],17);
 
-namaDesa=data.address.village||data.address.suburb||"-";
-namaKecamatan=data.address.subdistrict||data.address.county||"-";
+  fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+  .then(res=>res.json())
+  .then(data=>{
+    namaDesa = data.address.village || data.address.suburb || "-";
+    namaKecamatan = data.address.subdistrict || data.address.county || "-";
+
 
 hitungOngkir();
 animasiMotor();

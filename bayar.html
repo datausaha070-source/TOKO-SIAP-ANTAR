@@ -84,18 +84,49 @@ if(jumlahBelanja < 10){
 
 let sisa = 10 - jumlahBelanja;
 
-alert(
-"COD belum tersedia.\n"+
+popup(
+"COD belum tersedia.<br>"+
 "Belanja "+sisa+" kali lagi untuk membuka COD."
 );
-
 return;
 }
 
 kirimWA("COD");
 
 }
+function popup(pesan){
 
+let box = document.createElement("div");
+
+box.style.position="fixed";
+box.style.top="0";
+box.style.left="0";
+box.style.width="100%";
+box.style.height="100%";
+box.style.background="rgba(0,0,0,0.5)";
+box.style.display="flex";
+box.style.alignItems="center";
+box.style.justifyContent="center";
+box.style.zIndex="9999";
+
+box.innerHTML=`
+<div style="background:white;padding:20px;border-radius:12px;width:80%;max-width:300px;text-align:center">
+
+<h3 style="color:#15803d;margin-top:0">TOKO SIAP ANTAR</h3>
+
+<p>${pesan}</p>
+
+<button onclick="this.parentElement.parentElement.remove()"
+style="background:#15803d;color:white;border:none;padding:10px 20px;border-radius:6px">
+OK
+</button>
+
+</div>
+`;
+
+document.body.appendChild(box);
+
+}
 // ================= PILIH TRANSFER =================
 
 function pilihTransfer(bank,norek,nama){

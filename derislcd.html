@@ -116,7 +116,6 @@ return Math.round(x).toLocaleString("id-ID");
 
 
 // ================= AMBIL DATA SHEET =================
-
 const sheetURL = "https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=LCD";
 
 fetch(sheetURL)
@@ -125,18 +124,17 @@ fetch(sheetURL)
 
 let json = JSON.parse(data.substr(47).slice(0,-2));
 
-let semuaProduk = json.table.rows.map((r,i)=>({
+semuaProduk = json.table.rows.map((r,i)=>({
 id:i,
 nama:r.c[0]?.v,
-harga:r.c[1]?.v,
+kode:r.c[1]?.v,
+harga:r.c[2]?.v,
 gambar:r.c[3]?.v
 }));
 
 render();
 
 });
-
-
 // ================= RENDER =================
 
 function render(){

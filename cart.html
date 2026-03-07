@@ -243,7 +243,36 @@ function hitungOngkir(){
 
   const hargaBensin = 10000;   // harga bensin
   const kmPerLiter = 40;       // irit motor
+// biaya bensin per km
+const bensinPerKm = hargaBensin / kmPerLiter;
 
+// pulang pergi
+const biayaPP = bensinPerKm * 2;
+
+// untung 300%
+const tarifPerKm = biayaPP * 4;
+
+// hitung ongkir
+ongkir = jarakFix * tarifPerKm;
+
+// bulatkan ke 1000
+ongkir = Math.ceil(ongkir / 1000) * 1000;
+
+// minimal ongkir
+if(ongkir < 5000){
+  ongkir = 5000;
+}
+
+// hitung total belanja
+let totalBarang = 0;
+cart.forEach(p=>{
+  totalBarang += p.harga * p.qty;
+});
+
+// gratis ongkir
+if(totalBarang >= 500000){
+  ongkir = 0;
+}
   const bensinPerKm = hargaBensin / kmPerLiter;
 
   // pulang pergi

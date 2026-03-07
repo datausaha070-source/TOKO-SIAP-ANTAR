@@ -18,8 +18,31 @@ button{padding:6px 12px;border:none;border-radius:6px;margin:3px;cursor:pointer}
 .gray{background:#9ca3af;color:white}
 #map{height:260px;margin:10px;border-radius:10px}
 input{width:95%;margin:10px;padding:10px;border-radius:8px;border:1px solid #ccc}
-.checkout{position:fixed;bottom:60px;width:100%;background:#15803d;color:white;padding:15px;text-align:center;font-weight:bold}
-.clearBtn{position:fixed;bottom:0;width:100%;background:#9ca3af;color:white;padding:15px;text-align:center;font-weight:bold}
+.checkout{
+position:fixed;
+left:15px;
+bottom:90px;
+background:#16a34a;
+color:white;
+padding:12px 18px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 6px 15px rgba(0,0,0,0.3);
+z-index:999;
+}
+
+.clearBtn{
+position:fixed;
+left:15px;
+bottom:30px;
+background:#9ca3af;
+color:white;
+padding:12px 18px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 6px 15px rgba(0,0,0,0.3);
+z-index:999;
+}
 </style>
 </head>
 
@@ -37,8 +60,9 @@ input{width:95%;margin:10px;padding:10px;border-radius:8px;border:1px solid #ccc
 
 <input type="tel" id="waPembeli" placeholder="Nomor WhatsApp Aktif">
 
-<div class="checkout" id="btnCheckout" onclick="lanjutBayar()">Checkout</div>
-<div class="clearBtn" onclick="kosongkan()">Kosongkan Keranjang</div>
+<div class="checkout" id="btnCheckout" onclick="lanjutBayar()">🛒 Checkout</div>
+
+<div class="clearBtn" onclick="kosongkan()">🗑 Kosongkan</div>>
 
 <script>
 

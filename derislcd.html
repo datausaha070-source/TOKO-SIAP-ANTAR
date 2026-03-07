@@ -121,24 +121,22 @@ return Number(x).toLocaleString("id-ID");
 
 // ================= AMBIL DATA =================
 
-// ================= AMBIL DATA =================
-
 fetch(`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`)
 .then(res=>res.text())
 .then(data=>{
 
 let json = JSON.parse(data.substring(47).slice(0,-2));
 
-semuaProduk = json.table.rows
-.filter(r => r.c && r.c[1])
-.map((r,i)=>({
+let rows = json.table.rows || [];
+
+semuaProduk = rows.map((r,i)=>({
 
 id:"P"+i,
-kode:r.c[0]?.v || "",
-nama:r.c[1]?.v || "",
-harga:Number(r.c[3]?.v || 0)
+kode:r.c && r.c[0] ? r.c[0].v : "",
+nama:r.c && r.c[1] ? r.c[1].v : "",
+harga:r.c && r.c[3] ? Number(r.c[3].v) : 0
 
-}));
+})).filter(p => p.nama !== "");
 
 render();
 

@@ -9,14 +9,20 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
 <style>
-body{font-family:Arial;margin:0;background:#f2f2f2;padding-bottom:170px}
+
+body{
+font-family:Arial;
+margin:0;
+background:#f2f2f2;
+padding-bottom:160px;
+}
 
 header{
 background:#15803d;
 color:white;
 padding:15px;
 text-align:center;
-font-weight:bold
+font-weight:bold;
 }
 
 .card{
@@ -24,26 +30,18 @@ background:white;
 margin:10px;
 padding:12px;
 border-radius:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1)
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-.harga{color:#15803d;font-weight:bold}
-
-button{
-padding:6px 12px;
-border:none;
-border-radius:6px;
-margin:3px;
-cursor:pointer
+.harga{
+color:#15803d;
+font-weight:bold;
 }
-
-.green{background:#15803d;color:white}
-.gray{background:#9ca3af;color:white}
 
 #map{
 height:260px;
 margin:10px;
-border-radius:10px
+border-radius:10px;
 }
 
 input{
@@ -51,30 +49,37 @@ width:95%;
 margin:10px;
 padding:10px;
 border-radius:8px;
-border:1px solid #ccc
+border:1px solid #ccc;
 }
+
+/* tombol melayang */
 
 .checkout{
 position:fixed;
-bottom:60px;
-width:100%;
-background:#15803d;
+left:15px;
+bottom:90px;
+background:#16a34a;
 color:white;
-padding:15px;
-text-align:center;
-font-weight:bold
+padding:12px 18px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 6px 15px rgba(0,0,0,0.3);
+z-index:999;
 }
 
 .clearBtn{
 position:fixed;
-bottom:0;
-width:100%;
+left:15px;
+bottom:30px;
 background:#9ca3af;
 color:white;
-padding:15px;
-text-align:center;
-font-weight:bold
+padding:12px 18px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 6px 15px rgba(0,0,0,0.3);
+z-index:999;
 }
+
 </style>
 </head>
 
@@ -88,17 +93,17 @@ font-weight:bold
 
 <div id="map"></div>
 
-<button class="green" onclick="gunakanLokasi()" style="margin-left:10px;">
-📡 Gunakan Lokasi Saya Untuk Pengiriman Pesanan
+<button onclick="gunakanLokasi()" style="margin-left:10px;">
+📡 Gunakan Lokasi Saya
 </button>
 
 <div id="infoZona" class="card">Belum memilih lokasi</div>
 
 <input type="tel" id="waPembeli" placeholder="Nomor WhatsApp Aktif">
 
-<div class="checkout" onclick="lanjutBayar()">Checkout</div>
+<div class="checkout" id="btnCheckout" onclick="lanjutBayar()">🛒 Checkout</div>
 
-<div class="clearBtn" onclick="kosongkan()">Kosongkan Keranjang</div>
+<div class="clearBtn" onclick="kosongkan()">🗑 Kosongkan</div>
 
 <script>
 
@@ -106,13 +111,13 @@ font-weight:bold
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-const tokoLat = -6.883831;
-const tokoLng = 108.302788;
+const tokoLat=-6.883831;
+const tokoLng=108.302788;
 
 let tujuanLat=null;
 let tujuanLng=null;
+
 let ongkir=0;
-let jarakFix=0;
 let minimalBelanja=0;
 
 let namaDesa="-";
@@ -120,6 +125,8 @@ let namaKecamatan="-";
 
 let markerUser=null;
 let markerMotor=null;
+
+// ================= FORMAT RUPIAH =================
 
 function rupiah(a){
 return Math.round(a).toLocaleString("id-ID");
@@ -143,15 +150,21 @@ total+=sub;
 
 list.innerHTML+=`
 <div class="card">
+
 <b>${p.nama}</b><br>
-<span class="harga">Rp ${rupiah(p.harga)}</span><br>
+
+<span class="harga">
+Rp ${rupiah(p.harga)}
+</span><br>
 
 <button onclick="kurang(${i})">-</button>
 ${p.qty}
 <button onclick="tambah(${i})">+</button>
+
 <button onclick="hapus(${i})">Hapus</button>
 
 <br>Subtotal: Rp ${rupiah(sub)}
+
 </div>
 `;
 
@@ -161,22 +174,43 @@ let totalBayar=total+ongkir;
 
 list.innerHTML+=`
 <div class="card">
+
 <b>Total Barang : Rp ${rupiah(total)}</b><br>
+
 <b>Ongkir : Rp ${rupiah(ongkir)}</b>
 
 <hr>
 
 <b style="color:#15803d;font-size:18px">
+
 TOTAL BAYAR : Rp ${rupiah(totalBayar)}
+
 </b>
+
 </div>
 `;
 
+kontrolCheckout(total);
+
 }
 
-function tambah(i){cart[i].qty++;simpan();}
-function kurang(i){cart[i].qty--;if(cart[i].qty<=0)cart.splice(i,1);simpan();}
-function hapus(i){cart.splice(i,1);simpan();}
+// ================= EDIT CART =================
+
+function tambah(i){
+cart[i].qty++;
+simpan();
+}
+
+function kurang(i){
+cart[i].qty--;
+if(cart[i].qty<=0)cart.splice(i,1);
+simpan();
+}
+
+function hapus(i){
+cart.splice(i,1);
+simpan();
+}
 
 function kosongkan(){
 localStorage.removeItem("cart");
@@ -188,20 +222,38 @@ localStorage.setItem("cart",JSON.stringify(cart));
 renderCart();
 }
 
-// ================= CHECKOUT =================
+// ================= CHECKOUT CONTROL =================
 
-function lanjutBayar(){
+function kontrolCheckout(total){
 
-if(!tujuanLat){
-popup("Pilih lokasi pengiriman dulu");
-return;
-}
+let btn=document.getElementById("btnCheckout");
 
 let noWa=document.getElementById("waPembeli").value.trim();
 
-if(!noWa){
-popup("Isi nomor WhatsApp dulu");
-return;
+if(!tujuanLat || !noWa || total<minimalBelanja){
+
+btn.style.background="#9ca3af";
+btn.style.pointerEvents="none";
+
+}else{
+
+btn.style.background="#16a34a";
+btn.style.pointerEvents="auto";
+
+}
+
+}
+
+// ================= LANJUT BAYAR =================
+
+function lanjutBayar(){
+
+let noWa=document.getElementById("waPembeli").value.trim();
+
+noWa=noWa.replace(/\D/g,'');
+
+if(noWa.startsWith("0")){
+noWa="62"+noWa.substring(1);
 }
 
 localStorage.setItem("checkoutData",JSON.stringify({
@@ -231,15 +283,29 @@ var satelliteLayer=L.tileLayer(
 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 {maxZoom:19});
 
-var satelliteWithLabel=L.layerGroup([satelliteLayer]);
+var satelitNama=L.layerGroup([satelliteLayer]);
 
 L.control.layers({
 "Peta Normal":normalLayer,
 "Satelit":satelliteLayer,
-"Satelit + Nama":satelliteWithLabel
+"Satelit + Nama":satelitNama
 }).addTo(map);
 
-L.marker([tokoLat,tokoLng])
+// ================= ICON =================
+
+var tokoIcon=L.icon({
+iconUrl:"https://cdn-icons-png.flaticon.com/512/535/535137.png",
+iconSize:[35,35],
+iconAnchor:[17,35]
+});
+
+var motorIcon=L.icon({
+iconUrl:"https://cdn-icons-png.flaticon.com/512/2972/2972185.png",
+iconSize:[40,40],
+iconAnchor:[20,40]
+});
+
+L.marker([tokoLat,tokoLng],{icon:tokoIcon})
 .addTo(map)
 .bindPopup("🏪 Lokasi Toko")
 .openPopup();
@@ -247,6 +313,8 @@ L.marker([tokoLat,tokoLng])
 map.on('click',function(e){
 setLokasi(e.latlng.lat,e.latlng.lng);
 });
+
+// ================= GPS =================
 
 function gunakanLokasi(){
 
@@ -265,7 +333,7 @@ function setLokasi(lat,lng){
 tujuanLat=lat;
 tujuanLng=lng;
 
-if(markerUser) map.removeLayer(markerUser);
+if(markerUser)map.removeLayer(markerUser);
 
 markerUser=L.marker([lat,lng])
 .addTo(map)
@@ -273,6 +341,30 @@ markerUser=L.marker([lat,lng])
 .openPopup();
 
 map.setView([lat,lng],17);
+
+// garis rute
+
+if(window.garis)map.removeLayer(window.garis);
+
+window.garis=L.polyline([
+[tokoLat,tokoLng],
+[lat,lng]
+],{
+color:"#15803d",
+weight:4
+}).addTo(map);
+
+// radius
+
+if(window.radius)map.removeLayer(window.radius);
+
+window.radius=L.circle([tokoLat,tokoLng],{
+radius:30000,
+color:"#f97316",
+fillOpacity:0.08
+}).addTo(map);
+
+// ambil alamat
 
 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
 .then(res=>res.json())
@@ -282,8 +374,39 @@ namaDesa=data.address.village||data.address.suburb||"-";
 namaKecamatan=data.address.subdistrict||data.address.county||"-";
 
 hitungOngkir();
+animasiMotor();
 
 });
+
+}
+
+// ================= MOTOR =================
+
+function animasiMotor(){
+
+if(markerMotor)map.removeLayer(markerMotor);
+
+markerMotor=L.marker([tokoLat,tokoLng],{icon:motorIcon}).addTo(map);
+
+let steps=60;
+
+let latStep=(tujuanLat-tokoLat)/steps;
+let lngStep=(tujuanLng-tokoLng)/steps;
+
+let i=0;
+
+let jalan=setInterval(function(){
+
+let lat=tokoLat+latStep*i;
+let lng=tokoLng+lngStep*i;
+
+markerMotor.setLatLng([lat,lng]);
+
+i++;
+
+if(i>steps)clearInterval(jalan);
+
+},100);
 
 }
 
@@ -291,28 +414,43 @@ hitungOngkir();
 
 function hitungOngkir(){
 
-jarakFix=map.distance([tokoLat,tokoLng],[tujuanLat,tujuanLng])/1000;
+let jarak=map.distance([tokoLat,tokoLng],[tujuanLat,tujuanLng])/1000;
 
-ongkir=Math.ceil(jarakFix*2000);
+const bensin=10000;
+const kmPerLiter=40;
 
-if(ongkir<5000) ongkir=5000;
+const biayaKm=(bensin/kmPerLiter)*2*4;
+
+ongkir=Math.ceil(jarak*biayaKm/1000)*1000;
+
+if(ongkir<5000)ongkir=5000;
+
+let totalBarang=0;
+
+cart.forEach(p=>{
+totalBarang+=p.harga*p.qty;
+});
+
+if(totalBarang>=500000){
+ongkir=0;
+}
+
+if(jarak<=10)minimalBelanja=0;
+else if(jarak<=20)minimalBelanja=200000;
+else minimalBelanja=300000;
+
+let estimasi=Math.ceil(jarak*3);
 
 document.getElementById("infoZona").innerHTML=
 
-"Jarak: "+jarakFix.toFixed(1)+" km<br>"+
+"Jarak: "+jarak.toFixed(1)+" km<br>"+
 "Ongkir: Rp "+rupiah(ongkir)+"<br>"+
+"Minimal Belanja: Rp "+rupiah(minimalBelanja)+"<br>"+
+"Estimasi Antar: ±"+estimasi+" menit<br>"+
 "Desa: "+namaDesa+"<br>"+
 "Kecamatan: "+namaKecamatan;
 
 renderCart();
-
-}
-
-// ================= POPUP =================
-
-function popup(pesan){
-
-alert(pesan);
 
 }
 

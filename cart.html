@@ -201,14 +201,39 @@ setLokasi(e.latlng.lat,e.latlng.lng);
 
 function gunakanLokasi(){
 
-navigator.geolocation.getCurrentPosition(function(pos){
+popup("📡 Mencari lokasi Anda...");
 
-setLokasi(pos.coords.latitude,pos.coords.longitude);
-
-});
-
+if(!navigator.geolocation){
+popup("HP tidak mendukung GPS");
+return;
 }
 
+navigator.geolocation.getCurrentPosition(
+
+function(pos){
+
+setLokasi(
+pos.coords.latitude,
+pos.coords.longitude
+);
+
+},
+
+function(error){
+
+popup("❌ Tidak bisa mendapatkan lokasi. Aktifkan GPS.");
+
+},
+
+{
+enableHighAccuracy:false,
+timeout:7000,
+maximumAge:60000
+}
+
+);
+
+}
 function setLokasi(lat,lng){
 
 tujuanLat = lat;

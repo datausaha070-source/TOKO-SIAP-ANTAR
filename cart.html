@@ -330,20 +330,20 @@ navigator.geolocation.getCurrentPosition(
 
 function(pos){
 
-let lat=pos.coords.latitude;
-let lng=pos.coords.longitude;
+let lat = pos.coords.latitude;
+let lng = pos.coords.longitude;
 
 setLokasi(lat,lng);
 
 },
 
 function(){
-alert("Tidak bisa mengambil lokasi.\nAktifkan GPS.");
+alert("Tidak bisa mengambil lokasi.\nAktifkan GPS dan izin lokasi.");
 },
 
 {
 enableHighAccuracy:true,
-timeout:15000,
+timeout:20000,
 maximumAge:0
 }
 

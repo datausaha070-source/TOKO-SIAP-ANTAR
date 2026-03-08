@@ -693,7 +693,32 @@ opacity:0.7;
 animation:jalanmotor 12s linear infinite,
 asapgerak 1s linear infinite;
 }
+.motor-jalan{
+position:relative;
+height:40px;
+overflow:hidden;
+}
 
+.motor-kirim{
+position:absolute;
+left:-120px;
+top:0;
+animation:jalanmotor 12s linear infinite;
+}
+
+.motor-kirim img{
+height:36px;
+}
+
+.teks-kirim{
+position:absolute;
+left:-110px;
+top:6px;
+font-size:12px;
+color:#15803d;
+font-weight:bold;
+white-space:nowrap;
+}
 @keyframes jalanmotor{
 0%{left:-80px;}
 100%{left:100%;}

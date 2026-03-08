@@ -704,6 +704,23 @@ transform:translateX(-15px);
 opacity:0;
 }
 }
+#paketTerbang{
+position:fixed;
+font-size:22px;
+pointer-events:none;
+display:none;
+z-index:9999;
+}
+
+@keyframes keranjangBlink{
+0%{transform:scale(1);}
+50%{transform:scale(1.2);}
+100%{transform:scale(1);}
+}
+
+.keranjang-animasi{
+animation:keranjangBlink 0.5s ease 3;
+}
 </style>
 </head>
 
@@ -1203,8 +1220,38 @@ popup.style.display="flex";
 function tutupZoom(){
 document.getElementById("zoomPopup").style.display="none";
 }
+function animasiPaket(x,y){
+
+let paket = document.getElementById("paketTerbang");
+let cart = document.getElementById("cartIcon");
+
+paket.style.display="block";
+paket.style.left=x+"px";
+paket.style.top=y+"px";
+
+let target = cart.getBoundingClientRect();
+
+paket.animate([
+{ transform:"translate(0,0)" },
+{ transform:`translate(${target.left-x}px,${target.top-y}px)` }
+],{
+duration:700,
+easing:"ease-out"
+});
+
+setTimeout(()=>{
+paket.style.display="none";
+cart.classList.add("keranjang-animasi");
+
+setTimeout(()=>{
+cart.classList.remove("keranjang-animasi");
+},600);
+
+},700);
+
+}
 </script>
 
-
+<div id="paketTerbang">📦</div>
 </body>
 </html>

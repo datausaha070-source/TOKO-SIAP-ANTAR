@@ -649,6 +649,28 @@ font-weight:bold;
 cursor:pointer;
 box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
+.motor-jalan{
+position:relative;
+height:40px;
+overflow:hidden;
+}
+
+.motor-jalan img{
+position:absolute;
+height:35px;
+left:-60px;
+animation:motorkirim 12s linear infinite;
+}
+
+@keyframes motorkirim{
+0%{
+left:-60px;
+}
+
+100%{
+left:100%;
+}
+}
 </style>
 </head>
 
@@ -692,6 +714,10 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 </div>
 </div>
 <!-- TUTUP HEADER -->
+
+<div class="motor-jalan">
+<img src="motor.png">
+</div>
 
 <!-- RUNNING TEXT -->
 <div class="running-text">

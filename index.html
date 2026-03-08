@@ -652,23 +652,56 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 .motor-jalan{
 position:relative;
 height:40px;
+margin-bottom:-10px;
+z-index:5;
 overflow:hidden;
 }
 
-.motor-jalan img{
+.motor-jalan{
+position:relative;
+height:45px;
+margin-bottom:-10px;
+overflow:hidden;
+z-index:5;
+}
+
+.motor-kirim{
 position:absolute;
-height:35px;
-left:-60px;
-animation:motorkirim 12s linear infinite;
+height:38px;
+left:-80px;
+top:3px;
+animation:jalanmotor 9s linear infinite,
+goyangmotor 0.6s ease-in-out infinite alternate;
 }
 
-@keyframes motorkirim{
+.asap{
+position:absolute;
+left:-80px;
+top:18px;
+font-size:14px;
+opacity:0.7;
+animation:jalanmotor 9s linear infinite,
+asapgerak 1s linear infinite;
+}
+
+@keyframes jalanmotor{
+0%{left:-80px;}
+100%{left:100%;}
+}
+
+@keyframes goyangmotor{
+0%{transform:translateY(0px);}
+100%{transform:translateY(-2px);}
+}
+
+@keyframes asapgerak{
 0%{
-left:-60px;
+transform:translateX(0);
+opacity:0.8;
 }
-
 100%{
-left:100%;
+transform:translateX(-15px);
+opacity:0;
 }
 }
 </style>

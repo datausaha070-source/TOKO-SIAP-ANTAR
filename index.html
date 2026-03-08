@@ -653,50 +653,8 @@ box-shadow:0 4px 10px rgba(0,0,0,0.2);
 position:relative;
 height:40px;
 margin-bottom:-10px;
+overflow:hidden;
 z-index:5;
-overflow:hidden;
-}
-
-.motor-jalan{
-position:relative;
-height:40px;
-overflow:hidden;
-}
-
-.motor-kirim{
-position:absolute;
-left:-80px;
-top:0;
-animation:motorkirim 10s linear infinite;
-}
-
-.motor-kirim img{
-height:38px;
-}
-
-.teks-kirim{
-position:absolute;
-left:-110px;
-top:6px;
-font-size:12px;
-color:#15803d;
-font-weight:bold;
-white-space:nowrap;
-}
-
-.asap{
-position:absolute;
-left:-80px;
-top:18px;
-font-size:14px;
-opacity:0.7;
-animation:jalanmotor 12s linear infinite,
-asapgerak 1s linear infinite;
-}
-.motor-jalan{
-position:relative;
-height:40px;
-overflow:hidden;
 }
 
 .motor-kirim{
@@ -719,14 +677,19 @@ color:#15803d;
 font-weight:bold;
 white-space:nowrap;
 }
-@keyframes jalanmotor{
-0%{left:-80px;}
-100%{left:100%;}
+
+.asap{
+position:absolute;
+left:-80px;
+top:18px;
+font-size:14px;
+opacity:0.7;
+animation:asapgerak 1s linear infinite;
 }
 
-@keyframes goyangmotor{
-0%{transform:translateY(0px);}
-100%{transform:translateY(-2px);}
+@keyframes jalanmotor{
+0%{left:-120px;}
+100%{left:100%;}
 }
 
 @keyframes asapgerak{
@@ -734,7 +697,6 @@ white-space:nowrap;
 transform:translateX(0);
 opacity:0.8;
 }
-
 100%{
 transform:translateX(-15px);
 opacity:0;

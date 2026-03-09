@@ -364,7 +364,7 @@ el.classList.add("active");
 
 /* POPUP */
 
-function popupCOD(pesan){
+function popup(pesan){
 
 let box=document.createElement("div");
 
@@ -386,7 +386,10 @@ box.innerHTML=`
 
 <p>${pesan}</p>
 
-<button onclick="this.parentElement.parentElement.remove()" style="background:#15803d;color:white;border:none;padding:10px 20px;border-radius:6px">OK</button>
+<button onclick="this.parentElement.parentElement.remove()"
+style="background:#15803d;color:white;border:none;padding:10px 20px;border-radius:6px">
+OK
+</button>
 
 </div>
 `;
@@ -394,7 +397,6 @@ box.innerHTML=`
 document.body.appendChild(box);
 
 }
-
 /* BUAT PESANAN */
 
 function buatPesanan(){
@@ -524,7 +526,7 @@ linkMaps+"\n\n"+
 "━━━━━━━━━━━━━━━━━━━━\n"+
 infoBayar+"\n"+
 "━━━━━━━━━━━━━━━━━━━━";
-
+localStorage.removeItem("cart");
 window.open(
 "https://wa.me/62895707182299?text="+encodeURIComponent(pesan),
 "_blank"

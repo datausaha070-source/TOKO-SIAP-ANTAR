@@ -251,9 +251,15 @@ totalBarang += p.harga * p.qty;
 });
 
 if(minimalBelanja > 0 && totalBarang < minimalBelanja){
-popup("Minimal belanja Rp " + rupiah(minimalBelanja) +
-"\nTambah belanja Rp " + rupiah(minimalBelanja-totalBarang) + " lagi");
+
+popup(
+"Minimal belanja Rp " + rupiah(minimalBelanja) +
+"<br>Tambah belanja Rp " +
+rupiah(minimalBelanja-totalBarang) + " lagi"
+);
+
 return;
+
 }
 
 if(!tujuanLat){

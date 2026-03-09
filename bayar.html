@@ -2,168 +2,366 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Metode Pembayaran</title>
+<title>Checkout Pembayaran</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
 body{
 font-family:Arial;
-background:#f2f2f2;
+background:#f5f5f5;
 margin:0;
-padding:20px
+padding-bottom:80px;
 }
+
+/* HEADER */
+
+.header{
+background:white;
+padding:16px;
+font-size:18px;
+font-weight:bold;
+display:flex;
+align-items:center;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.back{
+font-size:22px;
+margin-right:10px;
+cursor:pointer;
+}
+
+/* CARD */
 
 .card{
 background:white;
-padding:20px;
+margin:12px;
+padding:16px;
 border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-margin-bottom:15px
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
-button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:8px;
-margin-top:10px;
+/* PRODUK */
+
+.produk{
+border-bottom:1px solid #eee;
+padding:8px 0;
+}
+
+.nama{
 font-weight:bold;
-cursor:pointer
 }
 
-.green{background:#15803d;color:white}
-.gray{background:#9ca3af;color:white}
+.harga{
+color:#16a34a;
+font-weight:bold;
+}
 
-h2{text-align:center}
+/* PAYMENT */
+
+.pay{
+border:1px solid #ddd;
+padding:12px;
+border-radius:8px;
+margin-top:8px;
+cursor:pointer;
+}
+
+.pay.active{
+border:2px solid #16a34a;
+}
+
+/* TOTAL */
+
+.total{
+display:flex;
+justify-content:space-between;
+margin-top:6px;
+font-size:14px;
+}
+
+.total span:last-child{
+font-weight:bold;
+}
+
+/* BUTTON */
+
+.btn{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#ee4d2d;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+/* REKENING */
+
+#rekeningBox{
+display:none;
+margin-top:10px;
+background:#f9fafb;
+padding:12px;
+border-radius:8px;
+font-size:14px;
+}
+
 </style>
 </head>
 
 <body>
 
-<h2>Pilih Metode Pembayaran</h2>
+<div class="header">
+<span class="back" onclick="window.location='cart.html'">⬅</span>
+Checkout
+</div>
+
+<!-- PRODUK -->
 
 <div class="card">
 
-<button id="btnCOD" class="green" onclick="pilihCOD()">
+<b>Produk Dibeli</b>
+
+<div id="produkList"></div>
+
+</div>
+
+<!-- METODE PEMBAYARAN -->
+
+<div class="card">
+
+<b>Metode Pembayaran</b>
+
+<div class="pay" onclick="pilihMetode('COD',this)">
 💵 COD (Bayar di Tempat)
-</button>
+</div>
 
-<button class="green" onclick="tampilkanTransfer()">
+<div class="pay" onclick="tampilTransfer()">
 🏦 Transfer Bank
-</button>
+</div>
 
-<div id="opsiTransfer" style="display:none;">
+<div id="transferBox" style="display:none">
 
-<button onclick="pilihTransfer('BRI','0046 0105 1342 504','INA KHOZINATUL ASROR')">
-Bank BRI
-</button>
+<div class="pay" onclick="pilihTransfer('BRI','0046 0105 1342 504','INA KHOZINATUL ASROR',this)">
+🏦 Bank BRI
+</div>
 
-<button onclick="pilihTransfer('DANA','082319264646','YUDI ALIYUDIN')">
-Bank DANA
+<div class="pay" onclick="pilihTransfer('DANA','082319264646','YUDI ALIYUDIN',this)">
+💳 DANA
+</div>
+
+</div>
+
+<div id="rekeningBox">
+
+<b>Transfer ke:</b><br><br>
+
+Bank BRI<br>
+0046 0105 1342 504<br>
+a.n INA KHOZINATUL ASROR<br><br>
+
+DANA<br>
+082319264646<br>
+a.n YUDI ALIYUDIN
+
+</div>
+
+</div>
+
+<!-- RINGKASAN -->
+
+<div class="card">
+
+<b>Ringkasan Pembayaran</b>
+
+<div style="font-size:12px;color:#888;margin-bottom:6px">
+Total <span id="jumlahItem"></span> Produk
+</div>
+
+<div class="total">
+<span>Total Barang</span>
+<span id="tBarang"></span>
+</div>
+
+<div class="total">
+<span>Ongkir</span>
+<span id="tOngkir"></span>
+</div>
+
+<div class="total">
+<span>Diskon Member</span>
+<span id="tDiskon"></span>
+</div>
+
+<hr>
+
+<div class="total" style="font-weight:bold;color:#ee4d2d;font-size:16px">
+<span>Total Bayar</span>
+<span id="tTotal"></span>
+</div>
+
+<button class="btn" onclick="buatPesanan()">
+Buat Pesanan
 </button>
 
 </div>
 
-<button class="gray" onclick="kembali()">
-⬅ Kembali ke Keranjang
-</button>
-
-</div>
 
 <script>
 
-// ================= KEMBALI =================
-
-function kembali(){
-window.location.href="cart.html";
-}
-
-// ================= TAMPILKAN TRANSFER =================
-
-function tampilkanTransfer(){
-document.getElementById("opsiTransfer").style.display="block";
-}
-
-// ================= NORMALISASI NOMOR WA =================
+/* NORMALISASI WA */
 
 function normalisasiWA(no){
+
 no = no.replace(/\D/g,'');
 
 if(no.startsWith("0")){
-no = "62" + no.substring(1);
+no = "62"+no.substring(1);
 }
 
 if(no.startsWith("8")){
-no = "62" + no;
+no = "62"+no;
 }
 
 return no;
+
 }
 
-// ================= CEK STATUS COD =================
+/* DATA */
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 let checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {};
+
+let metode="";
+let bank="";
+let norek="";
+let an="";
+
+/* HITUNG PRODUK */
+
+let total=0;
+let totalItem=0;
+
+let html="";
+
+cart.forEach(p=>{
+
+let sub = p.harga * p.qty;
+
+total += sub;
+totalItem += p.qty;
+
+html+=`
+<div class="produk">
+<div class="nama">${p.nama}</div>
+Qty : ${p.qty}<br>
+<span class="harga">Rp ${sub.toLocaleString("id-ID")}</span>
+</div>
+`;
+
+});
+
+document.getElementById("produkList").innerHTML=html;
+document.getElementById("jumlahItem").innerText=totalItem;
+
+/* ONGKIR */
+
+let ongkir = checkoutData.ongkir || 0;
+
+/* DATABASE PELANGGAN */
+
 let noWa = normalisasiWA(checkoutData.noWa || "");
 
-let dbPelanggan = JSON.parse(localStorage.getItem("dbPelanggan")) || {};
+let db = JSON.parse(localStorage.getItem("dbPelanggan")) || {};
 
-let jumlahBelanja = dbPelanggan[noWa] || 0;
-
-let tombolCOD = document.getElementById("btnCOD");
-
-if(tombolCOD && jumlahBelanja >= 10){
-tombolCOD.innerText="💵 COD (Bayar di Tempat) ✔";
+if(!db[noWa]){
+db[noWa]=0;
 }
 
-// ================= LEVEL PELANGGAN =================
+let trx = db[noWa];
 
-function levelPelanggan(transaksi){
+/* LEVEL */
 
-if(transaksi < 3){
-return "Member Baru";
-}
-else if(transaksi < 7){
-return "Member Silver";
-}
-else if(transaksi < 15){
-return "Member Gold";
-}
-else{
-return "Member Prioritas";
-}
+let level="Member Baru";
 
-}
+if(trx>=3) level="Member Silver";
+if(trx>=7) level="Member Gold";
+if(trx>=15) level="Member Prioritas";
 
-// ================= PILIH COD =================
+/* DISKON */
 
-function pilihCOD(){
+let diskon=0;
 
-let checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {};
-let noWa = normalisasiWA(checkoutData.noWa || "");
+if(level=="Member Gold") diskon=5000;
+if(level=="Member Prioritas") diskon=10000;
 
-let dbPelanggan = JSON.parse(localStorage.getItem("dbPelanggan")) || {};
+/* TOTAL */
 
-let jumlahBelanja = dbPelanggan[noWa] || 0;
+let totalBayar = total + ongkir - diskon;
 
-if(jumlahBelanja < 10){
+document.getElementById("tBarang").innerText="Rp "+total.toLocaleString("id-ID");
+document.getElementById("tOngkir").innerText="Rp "+ongkir.toLocaleString("id-ID");
+document.getElementById("tDiskon").innerText="Rp "+diskon.toLocaleString("id-ID");
+document.getElementById("tTotal").innerText="Rp "+totalBayar.toLocaleString("id-ID");
 
-let sisa = 10 - jumlahBelanja;
+/* PILIH METODE */
 
-popup(
-"COD belum tersedia.<br>"+
-"Belanja "+sisa+" kali lagi untuk membuka COD."
+function pilihMetode(m,el){
+
+if(m==="COD"){
+
+if(trx < 10){
+
+popupCOD(
+"COD belum tersedia.<br><br>"+
+"Belanja "+(10-trx)+" kali lagi untuk membuka COD"
 );
 
 return;
-}
-
-kirimWA("COD");
 
 }
 
-// ================= POPUP =================
+}
 
-function popup(pesan){
+metode=m;
+
+document.querySelectorAll(".pay").forEach(x=>x.classList.remove("active"));
+
+el.classList.add("active");
+
+}
+
+/* TRANSFER */
+
+function tampilTransfer(){
+
+document.getElementById("transferBox").style.display="block";
+document.getElementById("rekeningBox").style.display="block";
+
+}
+
+function pilihTransfer(b,n,a,el){
+
+metode="TRANSFER";
+
+bank=b;
+norek=n;
+an=a;
+
+document.querySelectorAll(".pay").forEach(x=>x.classList.remove("active"));
+
+el.classList.add("active");
+
+}
+
+/* POPUP */
+
+function popupCOD(pesan){
 
 let box=document.createElement("div");
 
@@ -185,10 +383,7 @@ box.innerHTML=`
 
 <p>${pesan}</p>
 
-<button onclick="this.parentElement.parentElement.remove()"
-style="background:#15803d;color:white;border:none;padding:10px 20px;border-radius:6px">
-OK
-</button>
+<button onclick="this.parentElement.parentElement.remove()" style="background:#15803d;color:white;border:none;padding:10px 20px;border-radius:6px">OK</button>
 
 </div>
 `;
@@ -197,113 +392,74 @@ document.body.appendChild(box);
 
 }
 
-// ================= PILIH TRANSFER =================
+/* BUAT PESANAN */
 
-function pilihTransfer(bank,norek,nama){
-kirimWA("TRANSFER",bank,norek,nama);
-}
+function buatPesanan(){
 
-// ================= KIRIM PESAN WA =================
-
-async function kirimWA(metode,bank,norek,nama){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-if(cart.length===0){
-alert("Keranjang kosong");
+if(!metode){
+alert("Pilih metode pembayaran dulu");
 return;
 }
 
-// ================= AMBIL DATA LOKASI =================
+/* UPDATE TRANSAKSI */
 
-let checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {};
+db[noWa]++;
 
-let lat = checkoutData.lat || "-";
-let lng = checkoutData.lng || "-";
-let desa = checkoutData.desa || "-";
-let kecamatan = checkoutData.kecamatan || "-";
-let ongkir = checkoutData.ongkir || 0;
+localStorage.setItem("dbPelanggan", JSON.stringify(db));
 
-let namaPembeli = checkoutData.namaPembeli || "-";
-let noWa = normalisasiWA(checkoutData.noWa || "");
-let linkMaps =
-"https://www.google.com/maps/search/?api=1&query="
-+ lat + "," + lng;
+trx = db[noWa];
 
-// ================= DATABASE PELANGGAN =================
+/* LOKASI */
 
-let dbPelanggan = JSON.parse(localStorage.getItem("dbPelanggan")) || {};
+let lat = checkoutData.lat;
+let lng = checkoutData.lng;
 
-if(!dbPelanggan[noWa]){
-dbPelanggan[noWa] = 0;
-}
+let desa = checkoutData.desa;
+let kecamatan = checkoutData.kecamatan;
 
-dbPelanggan[noWa]++;
+let linkMaps="https://www.google.com/maps/search/?api=1&query="+lat+","+lng;
 
-localStorage.setItem("dbPelanggan", JSON.stringify(dbPelanggan));
+/* WAKTU */
 
-let transaksiKe = dbPelanggan[noWa];
+let now=new Date();
 
-let level = levelPelanggan(transaksiKe);
+let orderId=Date.now();
 
-// ================= DISKON MEMBER =================
+let tanggal=now.toLocaleDateString("id-ID");
+let jam=now.toLocaleTimeString("id-ID");
 
-let diskon = 0;
+/* DETAIL */
 
-if(level === "Member Gold"){
-diskon = 5000;
-}
-else if(level === "Member Prioritas"){
-diskon = 10000;
-}
-
-// ================= HITUNG PRODUK =================
-
-let total=0;
-let totalItem=0;
 let detail="";
 
 cart.forEach(p=>{
 
-total+=p.harga*p.qty;
-totalItem+=p.qty;
-
-detail+="• "+p.nama+"\n"+
+detail+=
+"• "+p.nama+"\n"+
 "  Qty: "+p.qty+"\n"+
-"  Harga: Rp"+Math.round(p.harga*p.qty).toLocaleString("id-ID")+"\n\n";
+"  Harga: Rp"+(p.harga*p.qty).toLocaleString("id-ID")+"\n\n";
 
 });
 
-let totalBayar = total + ongkir - diskon;
+/* PEMBAYARAN */
 
-if(totalBayar < 0){
-totalBayar = 0;
-}
+let infoBayar="";
 
-let now = new Date();
-let orderId = Date.now();
-
-let tanggal = now.toLocaleDateString("id-ID");
-let jam = now.toLocaleTimeString("id-ID");
-
-// ================= INFO PEMBAYARAN =================
-
-let infoPembayaran="";
-
-if(metode==="COD"){
-infoPembayaran="Metode Pembayaran : COD (Bayar di Tempat)\n";
+if(metode=="COD"){
+infoBayar="Metode Pembayaran : COD (Bayar di Tempat)";
 }else{
-infoPembayaran=
+infoBayar=
 "Metode Pembayaran : TRANSFER\n\n"+
 "Bank "+bank+"\n"+
 norek+"\n"+
-"a.n "+nama+"\n\n"+
-"Status : MENUNGGU TRANSFER\n";
+"a.n "+an+"\n\n"+
+"Status : MENUNGGU TRANSFER";
 }
 
-// ================= PESAN WA =================
+/* PESAN WA */
 
-let pesan =
+let pesan=
+
 "━━━━━━━━━━━━━━━━━━━━\n"+
 "🧾 INVOICE PESANAN\n"+
 "━━━━━━━━━━━━━━━━━━━━\n\n"+
@@ -311,10 +467,10 @@ let pesan =
 "📌 ID Sistem : #"+orderId+"\n"+
 "📅 Tanggal   : "+tanggal+"\n"+
 "🕒 Jam       : "+jam+"\n"+
-"🔢 Transaksi ke : "+transaksiKe+"\n"+
+"🔢 Transaksi ke : "+trx+"\n"+
 "⭐ Status Pelanggan : "+level+"\n\n"+
 
-"👤 Nama Pembeli:\n"+namaPembeli+"\n"+
+"👤 Nama Pembeli:\n"+(checkoutData.namaPembeli || "Pelanggan")+"\n"+
 "📱 Nomor WhatsApp:\n"+noWa+"\n\n"+
 
 "━━━━━━━━━━━━━━━━━━━━\n"+
@@ -327,11 +483,11 @@ detail+
 "━━━━━━━━━━━━━━━━━━━━\n\n"+
 
 "Total Item   : "+totalItem+" pcs\n"+
-"Total Barang : Rp"+Math.round(total).toLocaleString("id-ID")+"\n"+
-"Ongkir       : Rp"+Math.round(ongkir).toLocaleString("id-ID")+"\n"+
-"Diskon Member: Rp"+Math.round(diskon).toLocaleString("id-ID")+"\n"+
+"Total Barang : Rp"+total.toLocaleString("id-ID")+"\n"+
+"Ongkir       : Rp"+ongkir.toLocaleString("id-ID")+"\n"+
+"Diskon Member: Rp"+diskon.toLocaleString("id-ID")+"\n"+
 "────────────────────\n"+
-"TOTAL BAYAR  : Rp"+Math.round(totalBayar).toLocaleString("id-ID")+"\n\n"+
+"TOTAL BAYAR  : Rp"+totalBayar.toLocaleString("id-ID")+"\n\n"+
 
 "━━━━━━━━━━━━━━━━━━━━\n"+
 "📍 LOKASI PENGIRIMAN\n"+
@@ -343,8 +499,7 @@ linkMaps+"\n\n"+
 "━━━━━━━━━━━━━━━━━━━━\n"+
 "💳 METODE PEMBAYARAN\n"+
 "━━━━━━━━━━━━━━━━━━━━\n"+
-infoPembayaran+
-
+infoBayar+"\n"+
 "━━━━━━━━━━━━━━━━━━━━";
 
 window.open(

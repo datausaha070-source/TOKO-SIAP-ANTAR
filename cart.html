@@ -405,11 +405,12 @@ fetch(
 .then(res=>res.json())
 .then(data=>{
 
-namaDesa=data.address.village || "-";
+namaDesa = data.address?.village || "-";
+
 namaKecamatan =
-data.address.subdistrict ||
-data.address.city_district ||
-data.address.town ||
+data.address?.subdistrict ||
+data.address?.city_district ||
+data.address?.town ||
 "-";
 hitungOngkir();
 
@@ -494,6 +495,7 @@ renderCart();
 function popup(pesan){
 
 let box=document.createElement("div");
+box.id="popupBox";
 
 box.style.position="fixed";
 box.style.top="0";

@@ -243,7 +243,10 @@ location.reload();
 
 /* ================= CHECKOUT ================= */
 function lanjutBayar(){
-
+if(cart.length == 0){
+popup("Keranjang masih kosong");
+return;
+}
 let totalBarang = 0;
 
 cart.forEach(p=>{
@@ -403,8 +406,11 @@ fetch(
 .then(data=>{
 
 namaDesa=data.address.village || "-";
-namaKecamatan=data.address.subdistrict || "-";
-
+namaKecamatan =
+data.address.subdistrict ||
+data.address.city_district ||
+data.address.town ||
+"-";
 hitungOngkir();
 
 });

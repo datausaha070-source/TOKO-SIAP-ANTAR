@@ -320,9 +320,10 @@ if(m==="COD"){
 
 if(trx < 10){
 
-popupCOD(
-"COD belum tersedia.<br><br>"+
-"Belanja "+(10-trx)+" kali lagi untuk membuka COD"
+popup(
+"🚫 COD belum tersedia<br><br>"+
+"Minimal 10 transaksi untuk membuka fitur COD.<br><br>"+
+"Anda masih perlu "+(10-trx)+" transaksi lagi."
 );
 
 return;

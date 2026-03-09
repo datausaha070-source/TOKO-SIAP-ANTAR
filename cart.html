@@ -242,16 +242,27 @@ location.reload();
 }
 
 /* ================= CHECKOUT ================= */
-
 function lanjutBayar(){
+
+let totalBarang = 0;
+
+cart.forEach(p=>{
+totalBarang += p.harga * p.qty;
+});
+
+if(minimalBelanja > 0 && totalBarang < minimalBelanja){
+popup("Minimal belanja Rp " + rupiah(minimalBelanja) +
+"\nTambah belanja Rp " + rupiah(minimalBelanja-totalBarang) + " lagi");
+return;
+}
 
 if(!tujuanLat){
 popup("Pilih lokasi pengiriman dulu");
 return;
 }
 
-let namaPembeli=document.getElementById("namaPembeli").value.trim();
-let noWa=document.getElementById("waPembeli").value.trim();
+let namaPembeli = document.getElementById("namaPembeli").value.trim();
+let noWa = document.getElementById("waPembeli").value.trim();
 
 if(!namaPembeli){
 popup("Isi nama pembeli dulu");
@@ -263,19 +274,17 @@ popup("Isi nomor WhatsApp dulu");
 return;
 }
 
-localStorage.setItem("checkoutData",JSON.stringify({
-
-lat:tujuanLat,
-lng:tujuanLng,
-desa:namaDesa,
-kecamatan:namaKecamatan,
-ongkir:ongkir,
-noWa:noWa,
-namaPembeli:namaPembeli
-
+localStorage.setItem("checkoutData", JSON.stringify({
+lat: tujuanLat,
+lng: tujuanLng,
+desa: namaDesa,
+kecamatan: namaKecamatan,
+ongkir: ongkir,
+noWa: noWa,
+namaPembeli: namaPembeli
 }));
 
-window.location.href="bayar.html";
+window.location.href = "bayar.html";
 
 }
 

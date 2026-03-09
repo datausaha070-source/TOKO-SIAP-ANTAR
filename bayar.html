@@ -398,9 +398,29 @@ document.body.appendChild(box);
 /* BUAT PESANAN */
 
 function buatPesanan(){
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {};
 
+let totalBarang = 0;
+
+cart.forEach(p=>{
+totalBarang += p.harga * p.qty;
+});
+
+let minimalBelanja = checkoutData.minimalBelanja || 0;
+
+if(minimalBelanja > 0 && totalBarang < minimalBelanja){
+
+popup(
+"Minimal belanja Rp " + minimalBelanja +
+"<br>Tambah belanja Rp " + (minimalBelanja-totalBarang) + " lagi"
+);
+
+return;
+
+}
 if(!metode){
-alert("Pilih metode pembayaran dulu");
+popup("Pilih metode pembayaran dulu");
 return;
 }
 

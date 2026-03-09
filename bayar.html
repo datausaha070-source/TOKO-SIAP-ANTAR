@@ -414,10 +414,9 @@ let minimalBelanja = checkoutData.minimalBelanja || 0;
 if(minimalBelanja > 0 && totalBarang < minimalBelanja){
 
 popup(
-"Minimal belanja Rp " + minimalBelanja +
-"<br>Tambah belanja Rp " + (minimalBelanja-totalBarang) + " lagi"
+"Minimal belanja Rp " + minimalBelanja.toLocaleString("id-ID") +
+"<br>Tambah belanja Rp " + (minimalBelanja-totalBarang).toLocaleString("id-ID") + " lagi"
 );
-
 return;
 
 }
@@ -527,13 +526,17 @@ linkMaps+"\n\n"+
 infoBayar+"\n"+
 "━━━━━━━━━━━━━━━━━━━━";
 localStorage.removeItem("cart");
+
 window.open(
 "https://wa.me/62895707182299?text="+encodeURIComponent(pesan),
 "_blank"
 );
 
-}
+setTimeout(()=>{
+window.location="index.html";
+},500);
 
+}
 </script>
 
 </body>

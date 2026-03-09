@@ -525,8 +525,24 @@ linkMaps+"\n\n"+
 "━━━━━━━━━━━━━━━━━━━━\n"+
 infoBayar+"\n"+
 "━━━━━━━━━━━━━━━━━━━━";
+// SIMPAN RIWAYAT PESANAN
+let riwayat = JSON.parse(localStorage.getItem("riwayatPesanan")) || [];
+
+riwayat.unshift({
+id: orderId,
+tanggal: tanggal,
+jam: jam,
+total: totalBayar,
+item: totalItem,
+status: "Pesanan dibuat"
+});
+
+localStorage.setItem("riwayatPesanan", JSON.stringify(riwayat));
+
 localStorage.removeItem("cart");
+
 popup("Pesanan dibuat. Menghubungkan ke WhatsApp...");
+
 window.open(
 "https://wa.me/62895707182299?text="+encodeURIComponent(pesan),
 "_blank"

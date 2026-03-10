@@ -503,6 +503,31 @@ z-index:9999;
 .keranjang-animasi{
 animation:keranjangBlink 0.5s ease 3;
 }
+/* SLIDER GOOGLE SHEET */
+
+.slider-sheet{
+width:100%;
+max-width:900px;
+margin:auto;
+overflow:hidden;
+position:absolute;
+top:40px;
+}
+
+.slides{
+display:flex;
+transition:0.6s;
+}
+
+.slide-manual{
+min-width:100%;
+}
+
+.slide-manual img{
+width:100%;
+display:block;
+border-radius:10px;
+}
 </style>
 </head>
 
@@ -1064,10 +1089,6 @@ width:100%;
 display:block;
 }
 </style>
-<div class="slider-sheet">
-<div class="slides" id="slides"></div>
-</div>
-
 <script>
 
 const sheetURL="https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=MEMBER";

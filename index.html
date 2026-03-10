@@ -913,23 +913,7 @@ cursor:pointer;
 from{opacity:0;}
 to{opacity:1;}
 }
-.slider-sheet{
-text-align:center;
-width:320px;
-margin:auto;
-overflow:hidden;
-position:relative;
-border-radius:10px;
-}
-.slide{
-width:320px;
-display:none;
-margin:auto;
-}
 
-.slide.active{
-display:block;
-  }
 .zoomBox{
 position:relative;
 background:white;
@@ -998,30 +982,7 @@ lagu.currentTime = 0;
 lagu.play();
 }
 </script>
-  <script>
-
-let slides=document.querySelectorAll(".slide-manual");
-let index=0;
-
-function showSlide(){
-
-slides.forEach(s=>s.classList.remove("active"));
-
-slides[index].classList.add("active");
-
-index++;
-
-if(index>=slides.length){
-index=0;
-}
-
-}
-
-setInterval(showSlide,3000);
-
-showSlide();
-
-  </script>
+ 
 
 <div id="zoomPopup" onclick="tutupZoom()">
 
@@ -1100,6 +1061,7 @@ cart.classList.remove("keranjang-animasi");
 },700);
 
 }
+</script>
 
 <style>
 

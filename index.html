@@ -1128,15 +1128,23 @@ function convertDriveSlide(url){
 
 if(!url) return "";
 
-if(url.includes("drive.google.com")){
-let id=url.split("/d/")[1]?.split("/")[0];
-return "https://drive.google.com/uc?export=view&id="+id;
+let id="";
+
+if(url.includes("id=")){
+id=url.split("id=")[1].split("&")[0];
 }
 
+else if(url.includes("/d/")){
+id=url.split("/d/")[1].split("/")[0];
+}
+
+else{
 return url;
-
 }
 
+return "https://drive.google.com/thumbnail?id="+id+"&sz=w1000";
+
+}
 let index=0;
 
 function startSlide(){

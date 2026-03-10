@@ -507,28 +507,36 @@ animation:keranjangBlink 0.5s ease 3;
 
 .slider-sheet{
 position:absolute;
-top:0;
+top:40px;
 left:0;
 width:100%;
-height:100%;
 overflow:hidden;
 z-index:1;
 }
 
 .slides{
 display:flex;
-transition:0.6s;
+gap:20px;
+animation:slidejalan 60s linear infinite;
 }
 
 .slide-manual{
-min-width:100%;
+flex-shrink:0;
 }
 
 .slide-manual img{
-width:100%;
-height:100%;
-object-fit:cover;
-display:block;
+width:220px;
+border-radius:10px;
+}
+
+@keyframes slidejalan{
+0%{
+transform:translateX(0);
+}
+
+100%{
+transform:translateX(-50%);
+}
 }
 </style>
 </head>
@@ -1076,6 +1084,7 @@ fetch(sheetSlider)
 .then(data=>{
 
 const json=JSON.parse(data.substring(47).slice(0,-2));
+
 let rows=json.table.rows;
 
 let html="";
@@ -1094,32 +1103,11 @@ html+=`
 
 });
 
-document.getElementById("slides").innerHTML=html;
+/* DUPLIKASI supaya loop halus */
 
-startSlide();
+document.getElementById("slides").innerHTML=html+html;
 
 });
-
-let index=0;
-
-function startSlide(){
-
-const slides=document.querySelectorAll(".slide-manual");
-const container=document.getElementById("slides");
-
-if(slides.length==0) return;
-
-setInterval(()=>{
-
-index++;
-
-if(index>=slides.length) index=0;
-
-container.style.transform="translateX(-"+(index*100)+"%)";
-
-},3000);
-
-}
 
 </script>
 </body>

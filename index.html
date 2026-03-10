@@ -1071,12 +1071,11 @@ cart.classList.remove("keranjang-animasi");
 
 const sheetSlider="https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=MEMBER";
 
-fetch(sheetURL)
+fetch(sheetSlider)
 .then(res=>res.text())
 .then(data=>{
 
 const json=JSON.parse(data.substring(47).slice(0,-2));
-
 let rows=json.table.rows;
 
 let html="";

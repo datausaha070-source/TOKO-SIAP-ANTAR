@@ -1000,7 +1000,7 @@ lagu.play();
 </script>
   <script>
 
-let slides=document.querySelectorAll(".slide");
+let slides=document.querySelectorAll(".slide-manual");
 let index=0;
 
 function showSlide(){
@@ -1151,7 +1151,8 @@ let foto=convertDriveSlide(r.c[9]?.v);
 if(!nama) return;
 
 html+=`
-<div class="slide">
+html+=`
+<div class="slide-manual">
 <img src="${foto}" alt="${nama}">
 </div>
 `;

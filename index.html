@@ -1081,12 +1081,10 @@ let html="";
 
 rows.forEach(r=>{
 
-let nama=r.c[1]?.v;
-rows.forEach(r=>{
-
 let foto=convertDriveSlide(r.c[9]?.v);
 
-if(!foto || foto=="") return;
+if(!foto) return;
+
 html+=`
 <div class="slide-manual">
 <img src="${foto}">
@@ -1122,12 +1120,15 @@ return url;
 return "https://drive.google.com/thumbnail?id="+id+"&sz=w1000";
 
 }
+
 let index=0;
 
 function startSlide(){
 
 const slides=document.querySelectorAll(".slide-manual");
 const container=document.getElementById("slides");
+
+if(slides.length==0) return;
 
 setInterval(()=>{
 

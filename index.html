@@ -1107,7 +1107,8 @@ rows.forEach(r=>{
 
 let nama=r.c[1]?.v;
 let foto=convertDriveSlide(r.c[9]?.v);
-if(!nama) return;
+
+if(!foto) return;
 
 html+=`
 <div class="slide-manual">

@@ -253,16 +253,17 @@ flex-direction:column;
 .produk-img-box{
 height:180px;
 background:linear-gradient(135deg,#16a34a,#f97316);
-display:flex;
-align-items:center;
-justify-content:center;
+overflow:hidden;
+border-radius:12px 12px 0 0;
 }
 
 .produk-img{
-max-height:140px;
-max-width:80%;
-object-fit:contain;
-border-radius:16px;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+.produk-card:hover .produk-img{
+transform:scale(1.05);
 }
 
 .produk-info{

@@ -1097,7 +1097,103 @@ cart.classList.remove("keranjang-animasi");
 
 }
 </script>
+<div class="slider">
+<div class="slides" id="slides"></div>
+</div>
 
-<div id="paketTerbang">📦</div>
+<style>
+
+.slider{
+width:320px;
+margin:auto;
+overflow:hidden;
+position:relative;
+border-radius:10px;
+}
+
+.slides{
+display:flex;
+transition:0.5s;
+}
+
+.slide{
+min-width:100%;
+}
+
+.slide img{
+width:100%;
+display:block;
+}
+
+</style>
+
+<script>
+
+const sheetURL="https://docs.google.com/spreadsheets/d/19AfachAS9ZyNuut61RB1wqyI_AI6BsmNT1SIWhmSIn8/gviz/tq?sheet=MEMBER";
+
+fetch(sheetURL)
+.then(res=>res.text())
+.then(data=>{
+
+const json=JSON.parse(data.substring(47).slice(0,-2));
+
+let rows=json.table.rows;
+
+let html="";
+
+rows.forEach(r=>{
+
+let nama=r.c[1]?.v;
+let foto=convertDrive(r.c[9]?.v);
+
+if(!nama) return;
+
+html+=`
+<div class="slide">
+<img src="${foto}" alt="${nama}">
+</div>
+`;
+
+});
+
+document.getElementById("slides").innerHTML=html;
+
+startSlide();
+
+});
+
+function convertDrive(url){
+
+if(!url) return "";
+
+if(url.includes("drive.google.com")){
+let id=url.split("/d/")[1]?.split("/")[0];
+return "https://drive.google.com/uc?export=view&id="+id;
+}
+
+return url;
+
+}
+
+let index=0;
+
+function startSlide(){
+
+const slides=document.querySelectorAll(".slide");
+const container=document.getElementById("slides");
+
+setInterval(()=>{
+
+index++;
+
+if(index>=slides.length) index=0;
+
+container.style.transform="translateX(-"+(index*100)+"%)";
+
+},3000);
+
+}
+
+</script>
 </body>
 </html>

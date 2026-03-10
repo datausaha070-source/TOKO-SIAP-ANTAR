@@ -913,10 +913,14 @@ cursor:pointer;
 from{opacity:0;}
 to{opacity:1;}
 }
-.slider{
+.slider-sheet{
 text-align:center;
+width:320px;
+margin:auto;
+overflow:hidden;
+position:relative;
+border-radius:10px;
 }
-
 .slide{
 width:320px;
 display:none;
@@ -1096,8 +1100,7 @@ cart.classList.remove("keranjang-animasi");
 },700);
 
 }
-</script>
-<div class="slider">
+<div class="slider-sheet">
 <div class="slides" id="slides"></div>
 </div>
 
@@ -1144,8 +1147,7 @@ let html="";
 rows.forEach(r=>{
 
 let nama=r.c[1]?.v;
-let foto=convertDrive(r.c[9]?.v);
-
+let foto=convertDriveSlide(r.c[9]?.v);
 if(!nama) return;
 
 html+=`
@@ -1162,7 +1164,7 @@ startSlide();
 
 });
 
-function convertDrive(url){
+function convertDriveSlide(url){
 
 if(!url) return "";
 

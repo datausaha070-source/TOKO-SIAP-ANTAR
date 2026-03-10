@@ -1100,13 +1100,10 @@ cart.classList.remove("keranjang-animasi");
 },700);
 
 }
-<div class="slider-sheet">
-<div class="slides" id="slides"></div>
-</div>
 
 <style>
 
-.slider{
+.slider-sheet{
 width:320px;
 margin:auto;
 overflow:hidden;
@@ -1119,16 +1116,18 @@ display:flex;
 transition:0.5s;
 }
 
-.slide{
+.slide-manual{
 min-width:100%;
 }
 
-.slide img{
+.slide-manual img{
 width:100%;
 display:block;
 }
-
 </style>
+<div class="slider-sheet">
+<div class="slides" id="slides"></div>
+</div>
 
 <script>
 
@@ -1150,7 +1149,6 @@ let nama=r.c[1]?.v;
 let foto=convertDriveSlide(r.c[9]?.v);
 if(!nama) return;
 
-html+=`
 html+=`
 <div class="slide-manual">
 <img src="${foto}" alt="${nama}">
@@ -1182,7 +1180,7 @@ let index=0;
 
 function startSlide(){
 
-const slides=document.querySelectorAll(".slide");
+const slides=document.querySelectorAll(".slide-manual");
 const container=document.getElementById("slides");
 
 setInterval(()=>{

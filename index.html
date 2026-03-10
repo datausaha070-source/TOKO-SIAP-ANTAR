@@ -1073,22 +1073,17 @@ fetch(sheetURL)
 .then(res=>res.text())
 .then(data=>{
 
-const json=JSON.parse(data.substr(47).slice(0,-2));
+const json=JSON.parse(data.substring(47).slice(0,-2));
 
-const rows=json.table.rows;
+let rows=json.table.rows;
 
 let html="";
 
-rows.forEach((r,i)=>{
+rows.forEach(r=>{
 
-// skip header
-if(i==0) return;
-
-let foto=r.c[9]?.v;
+let foto=convertDrive(r.c[9]?.v);
 
 if(!foto) return;
-
-foto=convertDriveSlide(foto);
 
 html+=`
 <div class="slide-manual">
@@ -1103,28 +1098,6 @@ document.getElementById("slides").innerHTML=html;
 startSlide();
 
 });
-
-function convertDriveSlide(url){
-
-if(!url) return "";
-
-if(url.includes("drive.google.com")){
-
-let id="";
-
-if(url.includes("id=")){
-id=url.split("id=")[1].split("&")[0];
-}
-else if(url.includes("/d/")){
-id=url.split("/d/")[1].split("/")[0];
-}
-
-return "https://drive.google.com/thumbnail?id="+id+"&sz=w1200";
-}
-
-return url;
-
-}
 
 let index=0;
 

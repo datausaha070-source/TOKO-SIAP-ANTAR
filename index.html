@@ -517,7 +517,7 @@ z-index:1;
 .slides{
 display:flex;
 gap:20px;
-animation:slidejalan 60s linear infinite;
+animation:slidejalan 25s linear infinite;
 }
 
 .slide-manual{
@@ -526,9 +526,10 @@ flex-shrink:0;
 
 .slide-manual img{
 width:220px;
+height:160px;
+object-fit:cover;
 border-radius:10px;
 }
-
 @keyframes slidejalan{
 0%{
 transform:translateX(0);
@@ -538,6 +539,7 @@ transform:translateX(0);
 transform:translateX(-50%);
 }
 }
+
 </style>
 </head>
 

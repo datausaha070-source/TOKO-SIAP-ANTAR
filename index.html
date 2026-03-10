@@ -751,9 +751,8 @@ html+=`
 
 <div class="produk-card">
 
-<div class="produk-img-box">
-<img src="${foto}" class="produk-img" onclick="zoomFoto('${foto}')">
-</div>
+<img src="${foto}" class="produk-img"
+onclick="zoomFoto('${foto}','${nama}','${harga}')">
 
 <div class="produk-info">
 
@@ -990,19 +989,47 @@ showSlide();
   </script>
 
 <div id="zoomPopup" onclick="tutupZoom()">
+
 <div class="zoomBox" onclick="event.stopPropagation()">
+
 <span class="zoomClose" onclick="tutupZoom()">✕</span>
-<img id="zoomImg" onclick="tutupZoom()">
+
+<img id="zoomImg">
+
+<div style="margin-top:10px">
+
+<div id="zoomNama" style="font-weight:bold"></div>
+
+<div id="zoomHarga" style="color:#ff6a00;font-weight:bold;margin:6px 0"></div>
+
+<button id="zoomCart" class="btn-cart">
++ Keranjang
+</button>
+
 </div>
+
+</div>
+
 </div>
 <script>
 
-function zoomFoto(src){
-let popup=document.getElementById("zoomPopup");
-let img=document.getElementById("zoomImg");
+function zoomFoto(src,nama,harga){
 
-img.src=src;
+let popup=document.getElementById("zoomPopup");
+
+document.getElementById("zoomImg").src=src;
+
+document.getElementById("zoomNama").innerText=nama;
+
+document.getElementById("zoomHarga").innerText=
+"Rp "+Number(harga).toLocaleString();
+
+document.getElementById("zoomCart").onclick=function(){
+tambahKeranjang(nama,harga,src);
+};
+
 popup.style.display="flex";
+
 }
 
 function tutupZoom(){

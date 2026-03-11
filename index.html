@@ -18,6 +18,10 @@ font-family:'Segoe UI',sans-serif;
 body{
 background:#f4f6f9;
 color:#333;
+min-width:1200px;
+overflow-x:auto;
+display:flex;
+justify-content:center;
 }
 
 /* ===== COLOR ROOT ===== */
@@ -549,7 +553,7 @@ transform:translateX(-50%);
 </head>
 
 <body>
-
+<div style="width:1200px;">
 <!-- FLOAT CART -->
 <div id="cartFloat" onclick="window.location.href='cart.html'">
 🛒Keranjang <span id="cartCount">0</span>
@@ -1118,5 +1122,7 @@ document.getElementById("slides").innerHTML=html;
 });
 
 </script>
+</div>
+
 </body>
 </html>

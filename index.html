@@ -748,8 +748,8 @@ rows.forEach(r=>{
 
 let nama=r.c[1]?.v;
 let deskripsi = r.c[2] ? r.c[2].v : "";
-let harga=r.c[7]?.v;
-let foto=convertDrive(r.c[5]?.v);
+let harga=r.c[3]?.v;
+let foto=convertDrive(r.c[4]?.v);
 
 if(!nama) return;
 

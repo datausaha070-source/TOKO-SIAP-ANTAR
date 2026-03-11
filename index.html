@@ -762,6 +762,10 @@ onclick="zoomFoto('${foto}','${nama}','${harga}','${deskripsi}')">
 
 <div class="produk-nama">${nama}</div>
 
+<div style="font-size:11px;color:#666;margin:4px 0;">
+${deskripsi || ""}
+</div>
+
 <div class="produk-harga">
 Rp ${Number(harga).toLocaleString()}
 </div>

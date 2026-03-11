@@ -995,6 +995,7 @@ lagu.play();
 <div style="margin-top:10px">
 
 <div id="zoomNama" style="font-weight:bold"></div>
+<div id="zoomDeskripsi" style="font-size:13px;color:#555;margin:10px 0;max-height:120px;overflow:auto"></div>
 
 <div id="zoomHarga" style="color:#ff6a00;font-weight:bold;margin:6px 0"></div>
 
@@ -1009,7 +1010,7 @@ lagu.play();
 </div>
 <script>
 
-function zoomFoto(src,nama,harga){
+function zoomFoto(src,nama,harga,deskripsi){
 
 let popup=document.getElementById("zoomPopup");
 
@@ -1020,14 +1021,14 @@ document.getElementById("zoomNama").innerText=nama;
 document.getElementById("zoomHarga").innerText=
 "Rp "+Number(harga).toLocaleString();
 
+document.getElementById("zoomDeskripsi").innerText=deskripsi;
+
 document.getElementById("zoomCart").onclick=function(){
 tambahKeranjang(nama,harga,src);
 };
 
 popup.style.display="flex";
-
 }
-
 function tutupZoom(){
 document.getElementById("zoomPopup").style.display="none";
 }

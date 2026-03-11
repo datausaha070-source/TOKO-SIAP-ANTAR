@@ -1021,8 +1021,8 @@ document.getElementById("zoomNama").innerText=nama;
 document.getElementById("zoomHarga").innerText=
 "Rp "+Number(harga).toLocaleString();
 
-document.getElementById("zoomDeskripsi").innerText=deskripsi;
-
+document.getElementById("zoomDeskripsi").innerHTML =
+deskripsi.replace(/\n/g,"<br>");
 document.getElementById("zoomCart").onclick=function(){
 tambahKeranjang(nama,harga,src);
 };

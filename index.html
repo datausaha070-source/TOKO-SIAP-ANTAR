@@ -284,7 +284,11 @@ flex:1;
 font-size:12px;
 font-weight:600;
 }
-
+.produk-deskripsi{
+font-size:11px;
+color:#666;
+margin:4px 0;
+}
 .produk-harga{
 color:#ff6a00;
 font-size:13px;
@@ -762,8 +766,8 @@ onclick="zoomFoto('${foto}','${nama}','${harga}','${deskripsi}')">
 
 <div class="produk-nama">${nama}</div>
 
-<div style="font-size:11px;color:#666;margin:4px 0;">
-${deskripsi || ""}
+<div class="produk-deskripsi">
+${deskripsi ?? ""}
 </div>
 
 <div class="produk-harga">

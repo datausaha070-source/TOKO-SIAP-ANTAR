@@ -229,8 +229,13 @@ transition:0.2s;
 transform:scale(1.05);
 
 }
-/* ===== PRODUK ===== */
 
+.produk-scroll{
+height:70vh;
+overflow-y:auto;
+padding-bottom:100px;
+scroll-behavior:smooth;
+}
 /* ===== PRODUK ===== */
 .produk-container{
 display:grid;
@@ -615,8 +620,9 @@ Pengambilan LCD 20pcs Tempo 30 Hari
 </div>
 
 <!-- PRODUK -->
+<div class="produk-scroll">
 <div id="produkList" class="produk-container"></div>
-
+</div>
 <!-- FOOTER -->
 <div style="text-align:center;margin-top:30px">
 

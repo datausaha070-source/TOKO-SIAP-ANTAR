@@ -925,10 +925,13 @@ to{opacity:1;}
 position:relative;
 background:white;
 padding:25px;
-border-radius:18px;
+border-radius:20px;
 
-width:90%;
-max-width:420px;   /* sama seperti popup promo */
+width:92%;
+max-width:600px;
+
+max-height:85vh;   /* tinggi hampir layar */
+overflow:auto;
 
 display:flex;
 flex-direction:column;
@@ -938,12 +941,11 @@ text-align:center;
 box-shadow:0 15px 40px rgba(0,0,0,0.45);
 animation:zoomIn .25s ease;
 }
-
 #zoomImg{
 width:100%;
-max-height:420px;   /* tinggi seperti popup promo */
+max-height:55vh;   /* gambar besar */
 object-fit:contain;
-border-radius:12px;
+border-radius:14px;
 margin-bottom:15px;
 background:#f5f5f5;
 }

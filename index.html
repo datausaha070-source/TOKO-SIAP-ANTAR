@@ -1014,74 +1014,51 @@ box-shadow:0 4px 10px rgba(0,0,0,0.4);
 }
 @media (max-width:768px){
 
-body{
-min-width:100%;
-}
-
 .zoomBox{
-position:relative;
-background:white;
-padding:30px;
-border-radius:22px;
-
-width:96%;
-max-width:95vw;
-
-min-height:80vh;
-max-height:95vh;
-
-display:flex;
-flex-direction:column;
-justify-content:flex-start;
-align-items:center;
-text-align:center;
-
-box-shadow:0 20px 50px rgba(0,0,0,0.45);
-animation:zoomIn .25s ease;
+width:92%;
+max-width:420px;
+padding:20px;
+min-height:auto;
+max-height:90vh;
+overflow:auto;
 }
 
 #zoomImg{
 width:100%;
-height:70vh;
-
-object-fit:cover;   /* gambar isi kotak */
-
-border-radius:16px;
-margin-bottom:15px;
-background:#f5f5f5;
-}
-
-.zoomContent{
-width:100%;
-padding:10px 5px;
+height:auto;
+max-height:45vh;
+object-fit:contain;
+border-radius:12px;
+margin-bottom:12px;
 }
 
 #zoomNama{
-font-size:36px;      /* sebelumnya 26px */
+font-size:20px;
 font-weight:bold;
-margin-top:8px;
+margin-top:5px;
 }
 
 #zoomDeskripsi{
-width:100%;
-font-size:48px;      /* sebelumnya 18px */
+font-size:14px;
 color:#555;
-margin:10px 0;
-line-height:1.5;
+margin:8px 0;
+line-height:1.4;
+max-height:120px;
+overflow:auto;
 }
 
 #zoomHarga{
-font-size:38px;      /* sebelumnya 28px */
+font-size:20px;
 color:#ff6a00;
 font-weight:bold;
-margin:10px 0;
+margin:8px 0;
 }
 
 #zoomCart{
 width:100%;
-padding:18px;
-font-size:30px;      /* sebelumnya 20px */
-border-radius:10px;
+padding:12px;
+font-size:16px;
+border-radius:8px;
 }
 
 @keyframes zoomIn{

@@ -924,28 +924,29 @@ to{opacity:1;}
 .zoomBox{
 position:relative;
 background:white;
-padding:25px;
-border-radius:20px;
+padding:30px;
+border-radius:22px;
 
-width:92%;        /* lebar popup */
-max-width:500px;  /* batas di layar besar */
+width:96%;        /* hampir penuh layar */
+max-width:95vw;   /* mengikuti lebar layar */
 
-max-height:85vh;  /* tinggi popup */
+max-height:90vh;  /* lebih tinggi */
 
 display:flex;
 flex-direction:column;
 align-items:center;
 text-align:center;
 
-box-shadow:0 15px 40px rgba(0,0,0,0.45);
+box-shadow:0 20px 50px rgba(0,0,0,0.45);
 animation:zoomIn .25s ease;
 }
+
 #zoomImg{
 width:100%;
-max-height:60vh;   /* tinggi gambar */
+max-height:75vh;   /* gambar jauh lebih besar */
 object-fit:contain;
-border-radius:14px;
-margin-bottom:15px;
+border-radius:16px;
+margin-bottom:18px;
 background:#f5f5f5;
 }
 @keyframes zoomIn{

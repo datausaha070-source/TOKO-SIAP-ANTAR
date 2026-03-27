@@ -123,6 +123,9 @@ Belum memilih lokasi
 
 <input type="text" id="namaPembeli" placeholder="Nama Pembeli">
 <input type="tel" id="waPembeli" placeholder="Nomor WhatsApp Aktif">
+<input type="text" id="manualLokasi" 
+placeholder="Alamat lengkap / Link Google Maps (jika lokasi tidak akurat)"
+style="display:none;">.
 
 <button class="checkout" onclick="lanjutBayar()">
 Checkout
@@ -271,8 +274,10 @@ return;
 
 }
 
-if(!tujuanLat){
-popup("Pilih lokasi pengiriman dulu");
+let manual = document.getElementById("manualLokasi").value.trim();
+
+if(!tujuanLat && !manual){
+popup("Pilih lokasi atau isi alamat manual");
 return;
 }
 
@@ -292,6 +297,7 @@ return;
 localStorage.setItem("checkoutData", JSON.stringify({
 lat: tujuanLat,
 lng: tujuanLng,
+alamatManual: manual,
 desa: namaDesa,
 kecamatan: namaKecamatan,
 ongkir: ongkir,
@@ -370,12 +376,14 @@ if(el.style.zIndex=="9999") el.remove();
 
 // 🔥 CEK AKURASI GPS
 if(akurasi > 100){
+
+document.getElementById("manualLokasi").style.display = "block";
+
 popup(
 "⚠️ Lokasi kurang akurat ("+Math.round(akurasi)+" meter)<br><br>" +
-"Silakan:<br>" +
-"1. Klik peta untuk pilih manual<br>" +
-"2. Atau isi alamat / link Google Maps"
+"Silakan isi alamat manual atau klik peta"
 );
+
 }
 
 // tetap tampilkan titik biar user lihat posisi

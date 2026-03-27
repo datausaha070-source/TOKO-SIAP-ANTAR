@@ -359,15 +359,27 @@ navigator.geolocation.getCurrentPosition(
 
 function(pos){
 
+let lat = pos.coords.latitude;
+let lng = pos.coords.longitude;
+let akurasi = pos.coords.accuracy;
+
 // hapus popup loading
 document.querySelectorAll("body > div").forEach(el=>{
 if(el.style.zIndex=="9999") el.remove();
 });
 
-setLokasi(
-pos.coords.latitude,
-pos.coords.longitude
+// 🔥 CEK AKURASI GPS
+if(akurasi > 100){
+popup(
+"⚠️ Lokasi kurang akurat ("+Math.round(akurasi)+" meter)<br><br>" +
+"Silakan:<br>" +
+"1. Klik peta untuk pilih manual<br>" +
+"2. Atau isi alamat / link Google Maps"
 );
+}
+
+// tetap tampilkan titik biar user lihat posisi
+setLokasi(lat, lng);
 
 },
 
@@ -383,8 +395,8 @@ popup("❌ Tidak bisa mendapatkan lokasi. Aktifkan GPS.");
 },
 
 {
-enableHighAccuracy:false,
-timeout:2000,
+enableHighAccuracy:true,
+timeout:10000,
 maximumAge:0
 }
 
@@ -539,6 +551,9 @@ renderCart();
 
 window.onload = function(){
 gunakanLokasi();
+setTimeout(()=>{
+popup("📍 Jika titik tidak tepat, klik peta untuk memilih lokasi manual");
+},2000);
 };
 </script>
 
